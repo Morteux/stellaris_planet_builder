@@ -13,22 +13,33 @@ public class DistrictManager : MonoBehaviour
     private Transform GeneratorDistrict;
     private Transform MiningDistrict;
     private Transform AgricultureDistrict;
+    private string CityDistrictName;
+    private string IndustrialDistrictName;
+    private string GeneratorDistrictName;
+    private string MiningDistrictName;
+    private string AgricultureDistrictName;
 
     // Start is called before the first frame update
     void Start()
     {
         Planet = transform.parent.parent;
 
+        CityDistrictName = "City_District";
+        IndustrialDistrictName = "Industrial_District";
+        GeneratorDistrictName = "Generator_District";
+        MiningDistrictName = "Mining_District";
+        AgricultureDistrictName = "Agriculture_District";
+
         InitializePlanetDistricts();
 
         PlanetSizeSlider = transform.Find("PlanetSizeSlider/Slider");
         PlanetSizeSlider.GetComponent<Slider>().onValueChanged.AddListener(UpdateDistrictsSize);
 
-        CityDistrict = transform.Find("CityDistrict");
-        IndustrialDistrict = transform.Find("IndustrialDistrict");
-        GeneratorDistrict = transform.Find("GeneratorDistrict");
-        MiningDistrict = transform.Find("MiningDistrict");
-        AgricultureDistrict = transform.Find("AgricultureDistrict");
+        CityDistrict = transform.Find(CityDistrictName.Replace("_", ""));
+        IndustrialDistrict = transform.Find(IndustrialDistrictName.Replace("_", ""));
+        GeneratorDistrict = transform.Find(GeneratorDistrictName.Replace("_", ""));
+        MiningDistrict = transform.Find(MiningDistrictName.Replace("_", ""));
+        AgricultureDistrict = transform.Find(AgricultureDistrictName.Replace("_", ""));
 
         CityDistrict.Find("SelectedDistrictSlot").GetComponent<Button>().onClick.AddListener(delegate{ChangeCityDistrict(1);});
         IndustrialDistrict.Find("SelectedDistrictSlot").GetComponent<Button>().onClick.AddListener(delegate{ChangeIndustrialDistrict(1);});
@@ -58,30 +69,30 @@ public class DistrictManager : MonoBehaviour
 
     void ChangeCityDistrict(int mode) 
     {
-        ChangeDistrict(CityDistrict, mode);
+        ChangeDistrict(CityDistrict, CityDistrictName, mode);
     }
 
     void ChangeIndustrialDistrict(int mode) 
     {
-        ChangeDistrict(IndustrialDistrict, mode);
+        ChangeDistrict(IndustrialDistrict, IndustrialDistrictName, mode);
     }
 
     void ChangeGeneratorDistrict(int mode) 
     {
-        ChangeDistrict(GeneratorDistrict, mode);
+        ChangeDistrict(GeneratorDistrict, GeneratorDistrictName, mode);
     }
 
     void ChangeMiningDistrict(int mode) 
     {
-        ChangeDistrict(MiningDistrict, mode);
+        ChangeDistrict(MiningDistrict, MiningDistrictName, mode);
     }
 
     void ChangeAgricultureDistrict(int mode) 
     {
-        ChangeDistrict(AgricultureDistrict, mode);
+        ChangeDistrict(AgricultureDistrict, AgricultureDistrictName, mode);
     }
 
-    void ChangeDistrict(Transform district, int mode) 
+    void ChangeDistrict(Transform district, string districtName, int mode) 
     {
         int selected = int.Parse(district.Find("SelectedDistrictSlot/Counter").GetComponent<Text>().text);
         int unselected = int.Parse(district.Find("UnselectedDistrictSlot/Counter").GetComponent<Text>().text);
@@ -96,11 +107,25 @@ public class DistrictManager : MonoBehaviour
                 district.Find("UnselectedDistrictSlot/Counter").GetComponent<Text>().text = (unselected - mode * 1).ToString();
 
                 Planet.GetComponent<PlanetData>().districtCounter_ += mode;
-                Planet.GetComponent<PlanetData>().district_["Agriculture_District"] = selected + mode * 1;
+                Planet.GetComponent<PlanetData>().district_[districtName] = selected + mode * 1;
+
+                //     Debug.Log(unselected);
+                // if (unselected == 0)
+                // {
+                //     district.GetComponent<Image>().color = new Color(150, 150, 150, 255);
+                // }
+                // else
+                // {
+                //     district.GetComponent<Image>().color = new Color(255, 255, 255, 255);
+                // }
                 
                 UpdateDistrictsSlot();
 
                 Planet.GetComponentInChildren<PlanetData>().UpdatePlanetData();
+                // Planet.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();
+                Planet.GetComponentInChildren<CostButtonManager>().UpdateCosts();
+                // Planet.GetComponentInChildren<EffectButtonManager>().UpdateEffects();
+                Planet.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
             }
     }
 
@@ -137,19 +162,51 @@ public class DistrictManager : MonoBehaviour
         int absMiningDistrict       = Math.Abs(planetSize - selectedMiningDistrict);
         int absAgricultureDistrict  = Math.Abs(planetSize - selectedAgricultureDistrict);
 
-        CityDistrict.Find("UnselectedDistrictSlot/Counter").GetComponent<Text>().text           = (absCityDistrict - Math.Abs(total - selectedCityDistrict)).ToString();
-        IndustrialDistrict.Find("UnselectedDistrictSlot/Counter").GetComponent<Text>().text     = (absIndustrialDistrict - Math.Abs(total - selectedIndustrialDistrict)).ToString();
-        GeneratorDistrict.Find("UnselectedDistrictSlot/Counter").GetComponent<Text>().text      = (absGeneratorDistrict - Math.Abs(total - selectedGeneratorDistrict)).ToString();
-        MiningDistrict.Find("UnselectedDistrictSlot/Counter").GetComponent<Text>().text         = (absMiningDistrict - Math.Abs(total - selectedMiningDistrict)).ToString();
-        AgricultureDistrict.Find("UnselectedDistrictSlot/Counter").GetComponent<Text>().text    = (absAgricultureDistrict - Math.Abs(total - selectedAgricultureDistrict)).ToString();
-        }
+        int finalUnselectedCityDistrict = absCityDistrict - Math.Abs(total - selectedCityDistrict);
+        int finalUnselectedIndustrialDistrict = absIndustrialDistrict - Math.Abs(total - selectedIndustrialDistrict);
+        int finalUnselectedGeneratorDistrict = absGeneratorDistrict - Math.Abs(total - selectedGeneratorDistrict);
+        int finalUnselectedMiningDistrict = absMiningDistrict - Math.Abs(total - selectedMiningDistrict);
+        int finalUnselectedAgricultureDistrict = absAgricultureDistrict - Math.Abs(total - selectedAgricultureDistrict);
+
+        CityDistrict.Find("UnselectedDistrictSlot/Counter").GetComponent<Text>().text           = finalUnselectedCityDistrict.ToString();
+        IndustrialDistrict.Find("UnselectedDistrictSlot/Counter").GetComponent<Text>().text     = finalUnselectedIndustrialDistrict.ToString();
+        GeneratorDistrict.Find("UnselectedDistrictSlot/Counter").GetComponent<Text>().text      = finalUnselectedGeneratorDistrict.ToString();
+        MiningDistrict.Find("UnselectedDistrictSlot/Counter").GetComponent<Text>().text         = finalUnselectedMiningDistrict.ToString();
+        AgricultureDistrict.Find("UnselectedDistrictSlot/Counter").GetComponent<Text>().text    = finalUnselectedAgricultureDistrict.ToString();
+
+        // Change districts icon color when you can't build new ones
+        if (finalUnselectedCityDistrict == 0)
+            CityDistrict.GetComponent<Image>().color = new Color32(150, 150, 150, 255);
+        else 
+            CityDistrict.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+
+        if (finalUnselectedIndustrialDistrict == 0)
+            IndustrialDistrict.GetComponent<Image>().color = new Color32(150, 150, 150, 255);
+        else 
+            IndustrialDistrict.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+
+        if (finalUnselectedGeneratorDistrict == 0)
+            GeneratorDistrict.GetComponent<Image>().color = new Color32(150, 150, 150, 255);
+        else 
+            GeneratorDistrict.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+
+        if (finalUnselectedMiningDistrict == 0)
+            MiningDistrict.GetComponent<Image>().color = new Color32(150, 150, 150, 255);
+        else 
+            MiningDistrict.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+
+        if (finalUnselectedAgricultureDistrict == 0)
+            AgricultureDistrict.GetComponent<Image>().color = new Color32(150, 150, 150, 255);
+        else 
+            AgricultureDistrict.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+    }
 
     void InitializePlanetDistricts()
     {
-        Planet.GetComponent<PlanetData>().district_.Add("City_District", 0);
-        Planet.GetComponent<PlanetData>().district_.Add("Industrial_District", 0);
-        Planet.GetComponent<PlanetData>().district_.Add("Generator_District", 0);
-        Planet.GetComponent<PlanetData>().district_.Add("Mining_District", 0);
-        Planet.GetComponent<PlanetData>().district_.Add("Agriculture_District", 0);
+        Planet.GetComponent<PlanetData>().district_.Add(CityDistrictName, 0);
+        Planet.GetComponent<PlanetData>().district_.Add(IndustrialDistrictName, 0);
+        Planet.GetComponent<PlanetData>().district_.Add(GeneratorDistrictName, 0);
+        Planet.GetComponent<PlanetData>().district_.Add(MiningDistrictName, 0);
+        Planet.GetComponent<PlanetData>().district_.Add(AgricultureDistrictName, 0);
     }
 }

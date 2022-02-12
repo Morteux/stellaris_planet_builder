@@ -102,6 +102,7 @@ public class SlotsManager : MonoBehaviour
         planet.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();
         planet.GetComponentInChildren<CostButtonManager>().UpdateCosts();
         planet.GetComponentInChildren<EffectButtonManager>().UpdateEffects();
+        planet.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
     }
 
     public void UpgradeBuilding()
@@ -144,6 +145,7 @@ public class SlotsManager : MonoBehaviour
         planet.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();
         planet.GetComponentInChildren<CostButtonManager>().UpdateCosts();
         planet.GetComponentInChildren<EffectButtonManager>().UpdateEffects();
+        planet.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
     }
 
     public void DowngradeBuilding()
@@ -186,6 +188,7 @@ public class SlotsManager : MonoBehaviour
         planet.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();
         planet.GetComponentInChildren<CostButtonManager>().UpdateCosts();
         planet.GetComponentInChildren<EffectButtonManager>().UpdateEffects();
+        planet.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
     }
 
     public void HighlightSlot()
@@ -260,6 +263,7 @@ public class SlotsManager : MonoBehaviour
         planet.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();
         planet.GetComponentInChildren<CostButtonManager>().UpdateCosts();
         planet.GetComponentInChildren<EffectButtonManager>().UpdateEffects();
+        planet.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
     }
 
     private void UpdatePlanetBuildings()

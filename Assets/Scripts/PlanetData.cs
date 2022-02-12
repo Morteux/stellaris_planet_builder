@@ -16,6 +16,8 @@ public class PlanetData : MonoBehaviour
     [System.NonSerialized] public int planetSize_;
     [System.NonSerialized] public int jobCount;
     [System.NonSerialized] public int timeCount;
+    [System.NonSerialized] public string government_;
+    [System.NonSerialized] public List<string> governmentRequirement_;
 
     private OutputManager outputManager;
 
@@ -38,6 +40,9 @@ public class PlanetData : MonoBehaviour
 
         jobCount = 0;
         timeCount = 0;
+
+        government_ = "";
+        governmentRequirement_ = new List<string>();
     }
 
     public void UpdatePlanetData()

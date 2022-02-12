@@ -50,9 +50,11 @@ public class CostButtonManager : MonoBehaviour
             {
                 GameObject NewResourcePrefab = Instantiate(ResourcePrefab, costPanelContent_.position, costPanelContent_.rotation, costPanelContent_);
                 // Debug.Log(Data.Resource_to_string(pair.Key));
-                NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Resource_to_string(pair.Key));
+                // NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Resource_to_string(pair.Key));
+                NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + pair.Key.ToString());
 
-                NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = pair.Value.ToString() + " \t" + Data.Resource_to_string(pair.Key).Replace('_', ' ');
+                // NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = pair.Value.ToString() + " \t" + Data.Resource_to_string(pair.Key).Replace('_', ' ');
+                NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = pair.Value.ToString() + " \t" + pair.Key.ToString().Replace('_', ' ');
                 NewResourcePrefab.transform.Find("Name").GetComponent<Text>().color = new Color32(255, 0, 0, 255);
             }
         }

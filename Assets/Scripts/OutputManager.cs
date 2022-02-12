@@ -21,8 +21,10 @@ public class OutputManager : MonoBehaviour
     {
         GameObject NewResourcePrefab = Instantiate(ResourcePrefab, outcomeContent.position, outcomeContent.rotation, outcomeContent);
         // Debug.Log(Data.Resource_to_string(resource.Key));
-        NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Resource_to_string(resource.Key));
-        NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = "+" + resource.Value.ToString() + " \t" + Data.Resource_to_string(resource.Key).Replace('_', ' ');
+        // NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Resource_to_string(resource.Key));
+        NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + resource.Key.ToString());
+        // NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = "+" + resource.Value.ToString() + " \t" + Data.Resource_to_string(resource.Key).Replace('_', ' ');
+        NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = "+" + resource.Value.ToString() + " \t" + resource.Key.ToString().Replace('_', ' ');
         NewResourcePrefab.transform.Find("Name").GetComponent<Text>().color = new Color32(0, 255, 0, 255);
     }
 
@@ -30,8 +32,10 @@ public class OutputManager : MonoBehaviour
     {
         GameObject NewResourcePrefab = Instantiate(ResourcePrefab, upkeepContent.position, upkeepContent.rotation, upkeepContent);
         // Debug.Log(Data.Resource_to_string(resource.Key));
-        NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Resource_to_string(resource.Key));
-        NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = resource.Value.ToString() + " \t" + Data.Resource_to_string(resource.Key).Replace('_', ' ');
+        // NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Resource_to_string(resource.Key));
+        NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + resource.Key.ToString());
+        // NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = resource.Value.ToString() + " \t" + Data.Resource_to_string(resource.Key).Replace('_', ' ');
+        NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = resource.Value.ToString() + " \t" + resource.Key.ToString().Replace('_', ' ');
         NewResourcePrefab.transform.Find("Name").GetComponent<Text>().color = new Color32(255, 0, 0, 255);
     }
 
@@ -39,16 +43,19 @@ public class OutputManager : MonoBehaviour
     {
         GameObject NewResourcePrefab = Instantiate(ResourcePrefab, outputContent.position, outputContent.rotation, outputContent);
         // Debug.Log(Data.Resource_to_string(resource.Key));
-        NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Resource_to_string(resource.Key));
+        // NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Resource_to_string(resource.Key));
+        NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + resource.Key.ToString());
 
         if (resource.Value > 0)
         {
-            NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = "+" + resource.Value.ToString() + " \t" + Data.Resource_to_string(resource.Key).Replace('_', ' ');
+            // NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = "+" + resource.Value.ToString() + " \t" + Data.Resource_to_string(resource.Key).Replace('_', ' ');
+            NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = "+" + resource.Value.ToString() + " \t" + resource.Key.ToString().Replace('_', ' ');
             NewResourcePrefab.transform.Find("Name").GetComponent<Text>().color = new Color32(0, 255, 0, 255);
         }
         else
         {
-            NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = resource.Value.ToString() + " \t" + Data.Resource_to_string(resource.Key).Replace('_', ' ');
+            // NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = resource.Value.ToString() + " \t" + Data.Resource_to_string(resource.Key).Replace('_', ' ');
+            NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = resource.Value.ToString() + " \t" + resource.Key.ToString().Replace('_', ' ');
             NewResourcePrefab.transform.Find("Name").GetComponent<Text>().color = new Color32(255, 0, 0, 255);
         }
     }

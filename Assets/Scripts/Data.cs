@@ -22,47 +22,47 @@ public class Data {
                 Administrative_Capacity, Defense_Army, Naval_Capacity, Army_Experience, Deviancy
     };
 
-    public static string Resource_to_string(Resource r)
-    {
-        switch(r)
-        {
-            case Resource.NULL:                     return "NULL";
-            case Resource.Energy_Credits:           return "Energy_Credits";
-            case Resource.Minerals:                 return "Minerals";
-            case Resource.Food:                     return "Food";
-            case Resource.Alloys:                   return "Alloys";
-            case Resource.Consumer_Goods:           return "Consumer_Goods";
-            case Resource.Trade_Value:              return "Trade_Value";
-            case Resource.Influence:                return "Influence";
-            case Resource.Unity:                    return "Unity";
-            case Resource.Research:                 return "Research";
-            case Resource.Physics_Research:         return "Physics_Research";
-            case Resource.Society_Research:         return "Society_Research";
-            case Resource.Engineering_Research:     return "Engineering_Research";
-            case Resource.Exotic_Gases:             return "Exotic_Gases";
-            case Resource.Rare_Crystals:            return "Rare_Crystals";
-            case Resource.Volatile_Motes:           return "Volatile_Motes";
-            case Resource.Zro:                      return "Zro";
-            case Resource.Dark_Matter:              return "Dark_Matter";
-            case Resource.Living_Metal:             return "Living_Metal";
-            case Resource.Nanites:                  return "Nanites";
-            case Resource.Envoys:                   return "Envoys";
-            case Resource.Storage_Capacity:         return "Storage_Capacity";
-            case Resource.Housing:                  return "Housing";
-            case Resource.Amenities:                return "Amenities";
-            case Resource.Stability:                return "Stability";
-            case Resource.Crime:                    return "Crime";
-            case Resource.Happiness:                return "Happiness";
-            case Resource.Building_Slot:            return "Building_Slot";
-            case Resource.Administrative_Capacity:  return "Administrative_Capacity";
-            case Resource.Defense_Army:             return "Defense_Army";
-            case Resource.Naval_Capacity:           return "Naval_Capacity";
-            case Resource.Army_Experience:          return "Army_Experience";
-            case Resource.Deviancy:                 return "Deviancy";
+    // public static string Resource_to_string(Resource r)
+    // {
+    //     switch(r)
+    //     {
+    //         case Resource.NULL:                     return "NULL";
+    //         case Resource.Energy_Credits:           return "Energy_Credits";
+    //         case Resource.Minerals:                 return "Minerals";
+    //         case Resource.Food:                     return "Food";
+    //         case Resource.Alloys:                   return "Alloys";
+    //         case Resource.Consumer_Goods:           return "Consumer_Goods";
+    //         case Resource.Trade_Value:              return "Trade_Value";
+    //         case Resource.Influence:                return "Influence";
+    //         case Resource.Unity:                    return "Unity";
+    //         case Resource.Research:                 return "Research";
+    //         case Resource.Physics_Research:         return "Physics_Research";
+    //         case Resource.Society_Research:         return "Society_Research";
+    //         case Resource.Engineering_Research:     return "Engineering_Research";
+    //         case Resource.Exotic_Gases:             return "Exotic_Gases";
+    //         case Resource.Rare_Crystals:            return "Rare_Crystals";
+    //         case Resource.Volatile_Motes:           return "Volatile_Motes";
+    //         case Resource.Zro:                      return "Zro";
+    //         case Resource.Dark_Matter:              return "Dark_Matter";
+    //         case Resource.Living_Metal:             return "Living_Metal";
+    //         case Resource.Nanites:                  return "Nanites";
+    //         case Resource.Envoys:                   return "Envoys";
+    //         case Resource.Storage_Capacity:         return "Storage_Capacity";
+    //         case Resource.Housing:                  return "Housing";
+    //         case Resource.Amenities:                return "Amenities";
+    //         case Resource.Stability:                return "Stability";
+    //         case Resource.Crime:                    return "Crime";
+    //         case Resource.Happiness:                return "Happiness";
+    //         case Resource.Building_Slot:            return "Building_Slot";
+    //         case Resource.Administrative_Capacity:  return "Administrative_Capacity";
+    //         case Resource.Defense_Army:             return "Defense_Army";
+    //         case Resource.Naval_Capacity:           return "Naval_Capacity";
+    //         case Resource.Army_Experience:          return "Army_Experience";
+    //         case Resource.Deviancy:                 return "Deviancy";
             
-            default: {Debug.Log("INVALID RESOURCE: " + r); return "INVALID";}
-        }
-    }
+    //         default: {Debug.Log("INVALID RESOURCE: " + r); return "INVALID";}
+    //     }
+    // }
 
     public static Resource String_to_Resource(string r)
     {
@@ -122,7 +122,7 @@ public class Data {
                 Pacifist_Ethics, Materialist_Ethics,
                 Generator_District_Build_Speed, Mining_District_Build_Speed, City_District_Build_Speed,
                 Research_Lab_District_Build_Speed, Foundry_District_Build_Speed,
-                Civilian_Industries_District_Build_Speed,  Agriculture_District_Build_Speed,
+                Civilian_Industries_District_Build_Speed, Agriculture_District_Build_Speed,
                 Chemical_Plant_Build_Speed, Crystal_Plant_Build_Speed, Refinery_Build_Speed,
                 Upkeep_from_Jobs, Minerals_upkeep_Metallurgists, Food_upkeep_Catalytic_Technicians, Minerals_upkeep_Artisans,
                 Researcher_Upkeep, Metallurgist_Upkeep, Artisan_Upkeep, Chemist_Upkeep, Translucer_Upkeep, Gas_Refiner_Upkeep,
@@ -135,95 +135,95 @@ public class Data {
                 Spiritualist_Ethics_Attraction, Unity_from_Jobs
     };
 
-    public static string Effects_to_string(Effects e)
-    {
-        switch(e)
-        {
-            case Effects.NULL:                                          return "[]";
-            case Effects.Jobs_Energy:                                   return "Jobs_Energy";
-            case Effects.Jobs_Minerals:                                 return "Jobs_Minerals";
-            case Effects.Jobs_Food:                                     return "Jobs_Food";
-            case Effects.Jobs_Alloy:                                    return "Jobs_Alloy";
-            case Effects.Jobs_Consumer_Goods:                           return "Jobs_Consumer_Goods";
-            case Effects.Jobs_Unity:                                    return "Jobs_Unity";
-            case Effects.Jobs_Trade_Value:                              return "Jobs_Trade_Value";
-            case Effects.Research_Output:                               return "Research_Output";
-            case Effects.Slave_Output:                                  return "Slave_Output";
-            case Effects.Technicians_Output:                            return "Technicians_Output";
-            case Effects.Miners_Output:                                 return "Miners_Output";
-            case Effects.Farmers_Output:                                return "Farmers_Output";
-            case Effects.Worker_Output:                                 return "Worker_Output";
-            case Effects.Complex_Drone_Output:                          return "Complex_Drone_Output";
-            case Effects.Menial_Drone_Output:                           return "Menial_Drone_Output";
-            case Effects.Pop_Growth_Speed:                              return "Pop_Growth_Speed";
-            case Effects.Monthly_Pop_Assembly:                          return "Monthly_Pop_Assembly";
-            case Effects.Bombardment_Damage:                            return "Bombardment_Damage";
-            case Effects.Slave_Political_Power:                         return "Slave_Political_Power";
-            case Effects.Spiritualist_Ethics:                           return "Spiritualist_Ethics";
-            case Effects.Militarist_Ethics:                             return "Militarist_Ethics";
-            case Effects.Xenophobe_Ethics:                              return "Xenophobe_Ethics";
-            case Effects.Authoritarian_Ethics:                          return "Authoritarian_Ethics";
-            case Effects.Egalitarian_Ethics:                            return "Egalitarian_Ethics";
-            case Effects.Xenophile_Ethics:                              return "Xenophile_Ethics";
-            case Effects.Pacifist_Ethics:                               return "Pacifist_Ethics";
-            case Effects.Materialist_Ethics:                            return "Materialist_Ethics";
-            case Effects.Generator_District_Build_Speed:                return "Generator_District_Build_Speed";
-            case Effects.Mining_District_Build_Speed:                   return "Mining_District_Build_Speed";
-            case Effects.City_District_Build_Speed:                     return "City_District_Build_Speed";
-            case Effects.Research_Lab_District_Build_Speed:             return "Research_Lab_District_Build_Speed";
-            case Effects.Foundry_District_Build_Speed:                  return "Foundry_District_Build_Speed";
-            case Effects.Civilian_Industries_District_Build_Speed:      return "Civilian_Industries_District_Build_Speed";
-            case Effects.Agriculture_District_Build_Speed:              return "Agriculture_District_Build_Speed";
-            case Effects.Chemical_Plant_Build_Speed:                    return "Chemical_Plant_Build_Speed";
-            case Effects.Crystal_Plant_Build_Speed:                     return "Crystal_Plant_Build_Speed";
-            case Effects.Refinery_Build_Speed:                          return "Refinery_Build_Speed";
-            case Effects.Upkeep_from_Jobs:                              return "Upkeep_from_Jobs";
-            case Effects.Minerals_upkeep_Metallurgists:                 return "Minerals_upkeep_Metallurgists";
-            case Effects.Food_upkeep_Catalytic_Technicians:             return "Food_upkeep_Catalytic_Technicians";
-            case Effects.Minerals_upkeep_Artisans:                      return "Minerals_upkeep_Artisans";
-            case Effects.Researcher_Upkeep:                             return "Researcher_Upkeep";
-            case Effects.Metallurgist_Upkeep:                           return "Metallurgist_Upkeep";
-            case Effects.Artisan_Upkeep:                                return "Artisan_Upkeep";
-            case Effects.Chemist_Upkeep:                                return "Chemist_Upkeep";
-            case Effects.Translucer_Upkeep:                             return "Translucer_Upkeep";
-            case Effects.Gas_Refiner_Upkeep:                            return "Gas_Refiner_Upkeep";
-            case Effects.Fortress_Cost:                                 return "Fortress_Cost";
-            case Effects.City_District_Cost:                            return "City_District_Cost";
-            case Effects.Hive_District_Cost:                            return "Hive_District_Cost";
-            case Effects.Nexus_District_Cost:                           return "Nexus_District_Cost";
-            case Effects.Defense_Army_Damage:                           return "Defense_Army_Damage";
-            case Effects.Artisan_Output:                                return "Artisan_Output";
-            case Effects.Unemployed_Slaves_automatically_resettle:      return "Unemployed_Slaves_automatically_resettle";
-            case Effects.Happiness_for_6_months:                        return "Happiness_for_6_months";
-            case Effects.Immigration_Pull_for_6_months:                 return "Immigration_Pull_for_6_months";
-            case Effects.Pop_Primary_Species:                           return "Pop_Primary_Species";
-            case Effects.Organic_Pop_Assembly_Speed:                    return "Organic_Pop_Assembly_Speed";
-            case Effects.Complex_Drone_Output_when_above_50_Happiness:  return "Complex_Drone_Output_when_above_50_Happiness";
-            case Effects.Criminal_Branch_Office_Trade_Value:            return "Criminal_Branch_Office_Trade_Value";
-            case Effects.Resources_from_Jobs:                           return "Resources_from_Jobs";
-            case Effects.Energy_from_Technicians:                       return "Energy_from_Technicians";
-            case Effects.Minerals_from_Miners:                          return "Minerals_from_Miners";
-            case Effects.Food_from_Farmers:                             return "Food_from_Farmers";
-            case Effects.Alloys_from_Metallurgists:                     return "Alloys_from_Metallurgists";
-            case Effects.Consumer_Goods_from_Artisans:                  return "Consumer_Goods_from_Artisans";
-            case Effects.Culture_Workers_Output:                        return "Culture_Workers_Output";
-            case Effects.Spiritualist_Ethics_attraction:                return "Spiritualist_Ethics_attraction";
-            case Effects.Managers_Output:                               return "Managers_Output";
-            case Effects.Evaluators_Output:                             return "Evaluators_Output";
-            case Effects.Metallurgist_Output:                           return "Metallurgist_Output";
-            case Effects.Trade_Value:                                   return "Trade_Value";
-            case Effects.Automatic_resettlement_chance:                 return "Automatic_resettlement_chance";
-            case Effects.Monthly_Organic_Pop_Assembly:                  return "Monthly_Organic_Pop_Assembly";
-            case Effects.Envoy:                                         return "Envoy";
-            case Effects.Habitability:                                  return "Habitability";
-            case Effects.Planet_becomes_Gaia_World:                     return "Planet_becomes_Gaia_World";
-            case Effects.FTL_Inhibitor:                                 return "FTL_Inhibitor";
-            case Effects.Spiritualist_Ethics_Attraction:                return "Spiritualist_Ethics_Attraction";
-            case Effects.Unity_from_Jobs:                               return "Unity_from_Jobs";
+    // public static string Effects_to_string(Effects e)
+    // {
+    //     switch(e)
+    //     {
+    //         case Effects.NULL:                                          return "[]";
+    //         case Effects.Jobs_Energy:                                   return "Jobs_Energy";
+    //         case Effects.Jobs_Minerals:                                 return "Jobs_Minerals";
+    //         case Effects.Jobs_Food:                                     return "Jobs_Food";
+    //         case Effects.Jobs_Alloy:                                    return "Jobs_Alloy";
+    //         case Effects.Jobs_Consumer_Goods:                           return "Jobs_Consumer_Goods";
+    //         case Effects.Jobs_Unity:                                    return "Jobs_Unity";
+    //         case Effects.Jobs_Trade_Value:                              return "Jobs_Trade_Value";
+    //         case Effects.Research_Output:                               return "Research_Output";
+    //         case Effects.Slave_Output:                                  return "Slave_Output";
+    //         case Effects.Technicians_Output:                            return "Technicians_Output";
+    //         case Effects.Miners_Output:                                 return "Miners_Output";
+    //         case Effects.Farmers_Output:                                return "Farmers_Output";
+    //         case Effects.Worker_Output:                                 return "Worker_Output";
+    //         case Effects.Complex_Drone_Output:                          return "Complex_Drone_Output";
+    //         case Effects.Menial_Drone_Output:                           return "Menial_Drone_Output";
+    //         case Effects.Pop_Growth_Speed:                              return "Pop_Growth_Speed";
+    //         case Effects.Monthly_Pop_Assembly:                          return "Monthly_Pop_Assembly";
+    //         case Effects.Bombardment_Damage:                            return "Bombardment_Damage";
+    //         case Effects.Slave_Political_Power:                         return "Slave_Political_Power";
+    //         case Effects.Spiritualist_Ethics:                           return "Spiritualist_Ethics";
+    //         case Effects.Militarist_Ethics:                             return "Militarist_Ethics";
+    //         case Effects.Xenophobe_Ethics:                              return "Xenophobe_Ethics";
+    //         case Effects.Authoritarian_Ethics:                          return "Authoritarian_Ethics";
+    //         case Effects.Egalitarian_Ethics:                            return "Egalitarian_Ethics";
+    //         case Effects.Xenophile_Ethics:                              return "Xenophile_Ethics";
+    //         case Effects.Pacifist_Ethics:                               return "Pacifist_Ethics";
+    //         case Effects.Materialist_Ethics:                            return "Materialist_Ethics";
+    //         case Effects.Generator_District_Build_Speed:                return "Generator_District_Build_Speed";
+    //         case Effects.Mining_District_Build_Speed:                   return "Mining_District_Build_Speed";
+    //         case Effects.City_District_Build_Speed:                     return "City_District_Build_Speed";
+    //         case Effects.Research_Lab_District_Build_Speed:             return "Research_Lab_District_Build_Speed";
+    //         case Effects.Foundry_District_Build_Speed:                  return "Foundry_District_Build_Speed";
+    //         case Effects.Civilian_Industries_District_Build_Speed:      return "Civilian_Industries_District_Build_Speed";
+    //         case Effects.Agriculture_District_Build_Speed:              return "Agriculture_District_Build_Speed";
+    //         case Effects.Chemical_Plant_Build_Speed:                    return "Chemical_Plant_Build_Speed";
+    //         case Effects.Crystal_Plant_Build_Speed:                     return "Crystal_Plant_Build_Speed";
+    //         case Effects.Refinery_Build_Speed:                          return "Refinery_Build_Speed";
+    //         case Effects.Upkeep_from_Jobs:                              return "Upkeep_from_Jobs";
+    //         case Effects.Minerals_upkeep_Metallurgists:                 return "Minerals_upkeep_Metallurgists";
+    //         case Effects.Food_upkeep_Catalytic_Technicians:             return "Food_upkeep_Catalytic_Technicians";
+    //         case Effects.Minerals_upkeep_Artisans:                      return "Minerals_upkeep_Artisans";
+    //         case Effects.Researcher_Upkeep:                             return "Researcher_Upkeep";
+    //         case Effects.Metallurgist_Upkeep:                           return "Metallurgist_Upkeep";
+    //         case Effects.Artisan_Upkeep:                                return "Artisan_Upkeep";
+    //         case Effects.Chemist_Upkeep:                                return "Chemist_Upkeep";
+    //         case Effects.Translucer_Upkeep:                             return "Translucer_Upkeep";
+    //         case Effects.Gas_Refiner_Upkeep:                            return "Gas_Refiner_Upkeep";
+    //         case Effects.Fortress_Cost:                                 return "Fortress_Cost";
+    //         case Effects.City_District_Cost:                            return "City_District_Cost";
+    //         case Effects.Hive_District_Cost:                            return "Hive_District_Cost";
+    //         case Effects.Nexus_District_Cost:                           return "Nexus_District_Cost";
+    //         case Effects.Defense_Army_Damage:                           return "Defense_Army_Damage";
+    //         case Effects.Artisan_Output:                                return "Artisan_Output";
+    //         case Effects.Unemployed_Slaves_automatically_resettle:      return "Unemployed_Slaves_automatically_resettle";
+    //         case Effects.Happiness_for_6_months:                        return "Happiness_for_6_months";
+    //         case Effects.Immigration_Pull_for_6_months:                 return "Immigration_Pull_for_6_months";
+    //         case Effects.Pop_Primary_Species:                           return "Pop_Primary_Species";
+    //         case Effects.Organic_Pop_Assembly_Speed:                    return "Organic_Pop_Assembly_Speed";
+    //         case Effects.Complex_Drone_Output_when_above_50_Happiness:  return "Complex_Drone_Output_when_above_50_Happiness";
+    //         case Effects.Criminal_Branch_Office_Trade_Value:            return "Criminal_Branch_Office_Trade_Value";
+    //         case Effects.Resources_from_Jobs:                           return "Resources_from_Jobs";
+    //         case Effects.Energy_from_Technicians:                       return "Energy_from_Technicians";
+    //         case Effects.Minerals_from_Miners:                          return "Minerals_from_Miners";
+    //         case Effects.Food_from_Farmers:                             return "Food_from_Farmers";
+    //         case Effects.Alloys_from_Metallurgists:                     return "Alloys_from_Metallurgists";
+    //         case Effects.Consumer_Goods_from_Artisans:                  return "Consumer_Goods_from_Artisans";
+    //         case Effects.Culture_Workers_Output:                        return "Culture_Workers_Output";
+    //         case Effects.Spiritualist_Ethics_attraction:                return "Spiritualist_Ethics_attraction";
+    //         case Effects.Managers_Output:                               return "Managers_Output";
+    //         case Effects.Evaluators_Output:                             return "Evaluators_Output";
+    //         case Effects.Metallurgist_Output:                           return "Metallurgist_Output";
+    //         case Effects.Trade_Value:                                   return "Trade_Value";
+    //         case Effects.Automatic_resettlement_chance:                 return "Automatic_resettlement_chance";
+    //         case Effects.Monthly_Organic_Pop_Assembly:                  return "Monthly_Organic_Pop_Assembly";
+    //         case Effects.Envoy:                                         return "Envoy";
+    //         case Effects.Habitability:                                  return "Habitability";
+    //         case Effects.Planet_becomes_Gaia_World:                     return "Planet_becomes_Gaia_World";
+    //         case Effects.FTL_Inhibitor:                                 return "FTL_Inhibitor";
+    //         case Effects.Spiritualist_Ethics_Attraction:                return "Spiritualist_Ethics_Attraction";
+    //         case Effects.Unity_from_Jobs:                               return "Unity_from_Jobs";
 
-            default: {Debug.Log("INVALID EFFECT: " + e); return "INVALID";}
-        }
-    }
+    //         default: {Debug.Log("INVALID EFFECT: " + e); return "INVALID";}
+    //     }
+    // }
 
     public static Effects String_to_Effects(string e)
     {
@@ -321,21 +321,21 @@ public class Data {
 
     public enum Stratums {INVALID, NULL, Ruler, Specialist, Worker, Menial_Drone, Complex_Drone, Bio_Trophy};
 
-    public static string Stratums_to_string(Stratums s)
-    {
-        switch(s)
-        {
-            case Stratums.NULL:             return "-";
-            case Stratums.Ruler:            return "Ruler";
-            case Stratums.Specialist:       return "Specialist";
-            case Stratums.Worker:           return "Worker";
-            case Stratums.Menial_Drone:     return "Menial_Drone";
-            case Stratums.Complex_Drone:    return "Complex_Drone";
-            case Stratums.Bio_Trophy:       return "Bio_Trophy";
+    // public static string Stratums_to_string(Stratums s)
+    // {
+    //     switch(s)
+    //     {
+    //         case Stratums.NULL:             return "-";
+    //         case Stratums.Ruler:            return "Ruler";
+    //         case Stratums.Specialist:       return "Specialist";
+    //         case Stratums.Worker:           return "Worker";
+    //         case Stratums.Menial_Drone:     return "Menial_Drone";
+    //         case Stratums.Complex_Drone:    return "Complex_Drone";
+    //         case Stratums.Bio_Trophy:       return "Bio_Trophy";
 
-            default: {Debug.Log("INVALID STRATUMS: " + s); return "Invalid stratum";}
-        }
-    }
+    //         default: {Debug.Log("INVALID STRATUMS: " + s); return "Invalid stratum";}
+    //     }
+    // }
 
     public static Stratums String_to_Stratums(string s)
     {
