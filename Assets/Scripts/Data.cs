@@ -5,7 +5,6 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 
 public class Data {
-
     static public string _version_ = "3.2.1";
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////

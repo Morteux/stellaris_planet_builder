@@ -9,6 +9,8 @@ public class DataLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Data._version_ = PlayerPrefs.GetString("version");
+        
         // Debug.Log("Started Data.loadJobs()");
         Data.loadJobs();
         // Debug.Log("Ended Data.loadJobs()");
