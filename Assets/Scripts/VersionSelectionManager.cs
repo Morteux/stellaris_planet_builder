@@ -11,12 +11,19 @@ public class VersionSelectionManager : MonoBehaviour
     [System.NonSerialized] public GameObject SelectedVersion;
     private string version;
     private int versionButtonCount;
+    private Transform loadingScreen;
+    private Transform progressBar;
+    private AsyncOperation loadingOperation;
 
     // Start is called before the first frame update
     void Start()
     {
         version = "";
         versionButtonCount = 0;
+        loadingScreen = transform.parent.parent.Find("LoadingScreen");
+        progressBar = loadingScreen.Find("Slider");
+        loadingScreen.gameObject.SetActive(false);
+
         transform.parent.Find("Accept").GetComponent<Button>().onClick.AddListener(AcceptButton);
 
         // Instantiate version buttons
@@ -40,10 +47,23 @@ public class VersionSelectionManager : MonoBehaviour
             NewVersionButtonPrefab.transform.Find("Description").GetComponent<Text>().text = "Release: " + lineArray[3] + ". " + lineArray[5];
             NewVersionButtonPrefab.transform.Find("Wiki").GetComponent<Button>().onClick.AddListener(delegate { OpenWikiURL(lineArray[2]); });
 
+            if(lineArray[1] == "No")
+                NewVersionButtonPrefab.GetComponent<Button>().interactable = false;
+
             ++versionButtonCount;
         }
 
         Debug.Log("Versions loaded: " + versionButtonCount);
+    }
+
+    private void Update()
+    {
+        if (loadingScreen.gameObject.activeSelf)
+        {
+            float progressValue = Mathf.Clamp01(loadingOperation.progress / 0.9f);
+            progressBar.GetComponent<Slider>().value = progressValue;
+            progressBar.Find("Value").GetComponent<Text>().text = Mathf.Round(progressValue * 100).ToString("0.0") + "%";
+        }
     }
 
     // Open wiki URL for each version
@@ -63,6 +83,11 @@ public class VersionSelectionManager : MonoBehaviour
     {
         Data._version_ = version;
         // PlayerPrefs.SetString("version", version);
-        SceneManager.LoadScene("PlanetView", LoadSceneMode.Single);
+        // SceneManager.LoadScene("PlanetView", LoadSceneMode.Single);
+        loadingScreen.gameObject.SetActive(true);
+
+        loadingScreen.GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/LoadingScreens/" + Random.Range(0, 17));
+
+        loadingOperation = SceneManager.LoadSceneAsync("PlanetView");
     }
 }

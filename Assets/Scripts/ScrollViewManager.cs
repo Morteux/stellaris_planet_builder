@@ -29,6 +29,7 @@ public class ScrollViewManager : MonoBehaviour
                 NewBuildingButtonPrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Buildings/" + pair.Key);
                 NewBuildingButtonPrefab.transform.GetComponent<BuildingButtonManager>().building = pair.Value;
 
+                // Change button color for unique buildings
                 if (pair.Value.unique_ == "Yes")
                 {
                     NewBuildingButtonPrefab.transform.Find("NameBackground").GetComponent<Image>().color = new Color32(10, 13, 173, 240);
@@ -54,17 +55,15 @@ public class ScrollViewManager : MonoBehaviour
                     // NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = effect.Value + "% " + Data.Effects_to_string(effect.Key).Replace('_', ' ');
                     NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = effect.Value + "% " + effect.Key.ToString().Replace('_', ' ');
                 }
-                    
+
                 foreach (KeyValuePair<Data.Resource, int> pairUpkeep in pair.Value.upkeep_)
-                {
-                    if( pairUpkeep.Value < 0)
+                    if (pairUpkeep.Value < 0)
                     {
                         NewBuildingButtonPrefab.transform.Find("Description/UpkeepCounter").GetComponent<Text>().text = (-1 * pairUpkeep.Value).ToString();
                         // NewBuildingButtonPrefab.transform.Find("Description/UpkeepIcon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Resource_to_string(pairUpkeep.Key));
                         NewBuildingButtonPrefab.transform.Find("Description/UpkeepIcon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + pairUpkeep.Key.ToString());
                         NewBuildingButtonPrefab.transform.Find("Description/UpkeepIcon").GetComponent<Image>().color = new Color32(255, 255, 255, 255);
                     }
-                }
             }
         }
     }
@@ -72,7 +71,7 @@ public class ScrollViewManager : MonoBehaviour
     public void ActivateBuildingButton(string buildingName)
     {
         // BuildingButtons[buildingName].GetComponent<BuildingButtonManager>().ActivateBuildingButton();
-        while(Building._buildings_[buildingName].downgrade_ != "-")
+        while (Building._buildings_[buildingName].downgrade_ != "-")
         {
             buildingName = Building._buildings_[buildingName].downgrade_;
         }
