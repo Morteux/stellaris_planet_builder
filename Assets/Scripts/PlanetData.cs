@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlanetData : MonoBehaviour
 {
@@ -13,12 +14,17 @@ public class PlanetData : MonoBehaviour
     [System.NonSerialized] public Dictionary<Data.Resource, int> upkeepResources_;
     [System.NonSerialized] public Dictionary<Data.Resource, int> outputResources_;
     [System.NonSerialized] public Dictionary<Data.Effects, int> effects_;
+    [System.NonSerialized] public Dictionary<Data.Effects, int> planetaryEffects_;
     [System.NonSerialized] public int planetSize_;
     [System.NonSerialized] public int jobCount;
     [System.NonSerialized] public int timeCount;
+    [System.NonSerialized] public string planetType_;
     [System.NonSerialized] public string government_;
-    [System.NonSerialized] public List<string> governmentRequirement_;
-
+    [System.NonSerialized] public HashSet<string> planetTypeRequirement_;
+    [System.NonSerialized] public HashSet<string> governmentRequirement_;
+    [System.NonSerialized] public HashSet<string> requirements_;
+    [System.NonSerialized] public Transform planetName_;
+    [System.NonSerialized] public Transform planetNameInputField_;
     private OutputManager outputManager;
 
     // Start is called before the first frame update
@@ -37,12 +43,20 @@ public class PlanetData : MonoBehaviour
         upkeepResources_ = new Dictionary<Data.Resource, int>();
         outputResources_ = new Dictionary<Data.Resource, int>();
         effects_ = new Dictionary<Data.Effects, int>();
+        planetaryEffects_ = new Dictionary<Data.Effects, int>();
 
         jobCount = 0;
         timeCount = 0;
 
+        planetType_ = "Continental";
         government_ = "";
-        governmentRequirement_ = new List<string>();
+        planetTypeRequirement_ = new HashSet<string>();
+        governmentRequirement_ = new HashSet<string>();
+        requirements_ = new HashSet<string>();
+
+        planetName_ = transform.Find("PlanetName");
+        planetNameInputField_ = transform.Find("Panel/PlanetNameInputField");
+        planetNameInputField_.GetComponent<InputField>().onValueChanged.AddListener(delegate { ChangePlanetName(); });
     }
 
     public void UpdatePlanetData()
@@ -58,6 +72,15 @@ public class PlanetData : MonoBehaviour
 
         jobCount = 0;
         timeCount = 0;
+
+        // Calculate planetary job
+        foreach (KeyValuePair<Job, int> job in Planet._planets_[planetType_].jobs_)
+        {
+            if (jobs_.ContainsKey(job.Key))
+                jobs_[job.Key] += job.Value * job.Value;
+            else
+                jobs_.Add(job.Key, job.Value * job.Value);
+        }
 
         // Calculate district outcome
         foreach (KeyValuePair<string, int> district in district_)
@@ -118,12 +141,12 @@ public class PlanetData : MonoBehaviour
                 foreach (KeyValuePair<Data.Effects, int> pair in building.effects_)
                 {
                     // Debug.Log(pair);
-                    
+
                     if (effects_.ContainsKey(pair.Key))
                         effects_[pair.Key] += pair.Value;
                     else
                         effects_.Add(pair.Key, pair.Value);
-                        }
+                }
 
                 // Calculate cost for this building and all its downgraded version
                 Building downgraded = building;
@@ -188,5 +211,10 @@ public class PlanetData : MonoBehaviour
         foreach (KeyValuePair<Data.Resource, int> pair in outputResources_)
             if (pair.Value != 0)
                 outputManager.AddOutputResource(pair);
+    }
+
+    void ChangePlanetName()
+    {
+        planetName_.GetComponent<Text>().text = planetNameInputField_.GetComponent<InputField>().text;
     }
 }

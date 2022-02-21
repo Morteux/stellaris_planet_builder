@@ -8,38 +8,53 @@ using UnityEngine.UI;
 public class PlanetBarManager : MonoBehaviour
 {
     public GameObject planetTabPrefab_;
-
-    [System.NonSerialized] public static GameObject PlanetBar_;
-    [System.NonSerialized] public static Button btnNewPlanet_;
+    [System.NonSerialized] public GameObject activePlanet_;
+    private int planetButtonDistance_;
 
     void Awake()
     {
-        PlanetBar_ = gameObject;
-        btnNewPlanet_ = gameObject.transform.GetChild(0).gameObject.GetComponent<Button>();
-        btnNewPlanet_.onClick.AddListener(AddPlanetTab);
+        transform.Find("NewPlanet").GetComponent<Button>().onClick.AddListener(AddPlanetTab);
+        planetButtonDistance_ = 80;
+    }
+
+    void Start()
+    {
+        activePlanet_ = transform.Find("Planets/Planet/Panel").gameObject;
     }
 
     void AddPlanetTab()
     {
         // Debug.Log("PlanetBarManager::AddPlanetTab");
 
-        // Copy last planet tab position and add it +100 at x axis. This is the position for the new planet tab.
-        Vector3 buttonPos = gameObject.transform.GetChild(1).GetChild(gameObject.transform.GetChild(1).childCount - 1).gameObject.transform.position;
-        buttonPos.x += 100;
+        // Copy last planet tab position and add it planetButtonDistance_ at x axis. This is the position for the new planet tab.
+        Vector3 buttonPos = transform.Find("Planets").GetChild(transform.Find("Planets").childCount - 1).position;
+        buttonPos.x += planetButtonDistance_;
 
         // Copy positions from child's last planet tab and copy them to the new planet tab.
-        Vector3 panelPos = gameObject.transform.GetChild(1).GetChild(gameObject.transform.GetChild(1).childCount - 1).transform.GetChild(1).transform.position;
+        Vector3 panelPos = transform.Find("Planets").GetChild(transform.Find("Planets").childCount - 1).GetChild(1).position;
 
         // Instantiate a new planet tab
-        GameObject newPlanetTab = Instantiate(planetTabPrefab_, buttonPos, gameObject.transform.rotation);
-        newPlanetTab.transform.SetParent(PlanetBar_.transform.GetChild(1));
-        
+        GameObject newPlanetTab = Instantiate(planetTabPrefab_, buttonPos, transform.rotation);
+        newPlanetTab.transform.SetParent(transform.Find("Planets"));
+
         // Adjust new planet tab button position correctly
-        newPlanetTab.transform.GetChild(0).gameObject.GetComponent<Text>().text = gameObject.transform.GetChild(1).childCount.ToString();
-        newPlanetTab.transform.GetChild(1).transform.position = panelPos;
+        newPlanetTab.transform.GetChild(0).GetComponent<Text>().text = transform.Find("Planets").childCount.ToString();
+        newPlanetTab.transform.GetChild(1).position = panelPos;
 
         // Update new planet name with default name
         newPlanetTab.GetComponent<PlanetTabManager>().StartInstantation();
-        newPlanetTab.GetComponent<PlanetTabManager>().UpdateName((gameObject.transform.GetChild(1).childCount).ToString());
+        newPlanetTab.GetComponent<PlanetTabManager>().UpdateName(transform.Find("Planets").childCount.ToString());
     }
+    
+    // public void ChangeActivePlanet(GameObject panel)
+    // {
+    //     // Debug.Log("PlanetBarManager::ChangeActivePlanet");
+
+    //     if (activePlanet_ != panel)
+    //     {
+    //         activePlanet_.SetActive(false);
+    //         activePlanet_ = panel;
+    //         activePlanet_.SetActive(true);
+    //     }
+    // }
 }

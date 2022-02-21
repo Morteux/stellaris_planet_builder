@@ -214,7 +214,7 @@ public class SlotsManager : MonoBehaviour
 
         // Reactivate building button in BuildPanel for unique builds
         if (slotsBuildings[selectedSlot].unique_ == "Yes")
-            transform.parent.GetComponentInChildren<ScrollViewManager>().ActivateBuildingButton(slotsBuildings[selectedSlot].name_);
+            transform.parent.GetComponentInChildren<BuildManager>().ActivateBuildingButton(slotsBuildings[selectedSlot].name_);
 
         for (int i = selectedSlot; i < lastFreeSlot - 1; ++i)
         {

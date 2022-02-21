@@ -20,6 +20,9 @@ public class DataLoader : MonoBehaviour
         // Debug.Log("Started Data.loadDistrics()");
         Data.loadDistricts();
         // Debug.Log("Ended Data.loadDistrics()");
+        // Debug.Log("Started Data.loadPlanets()");
+        Data.loadPlanets();
+        // Debug.Log("Ended Data.loadPlanets()");
 
         PlanetBar.SetActive(true);
     }

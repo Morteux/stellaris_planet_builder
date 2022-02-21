@@ -40,6 +40,16 @@ public class EffectButtonManager : MonoBehaviour
             foreach (Transform child in effectPanelContent_)
                 GameObject.Destroy(child.gameObject);
 
+        foreach (KeyValuePair<Data.Effects, int> pair in planetData_.planetaryEffects_)
+        {
+            // Debug.Log(pair);
+            GameObject NewResourcePrefab = Instantiate(ResourcePrefab, effectPanelContent_.position, effectPanelContent_.rotation, effectPanelContent_);
+            // NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Effects_to_string(pair.Key));
+            NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Planets/" + planetData_.planetType_);
+            // NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = pair.Value.ToString() + "% \t" + Data.Effects_to_string(pair.Key).Replace('_', ' ');
+            NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = pair.Value.ToString() + "% \t" + pair.Key.ToString().Replace('_', ' ');
+        }
+
         foreach (KeyValuePair<Data.Effects, int> pair in planetData_.effects_)
         {
             // Debug.Log(pair);

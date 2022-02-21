@@ -27,13 +27,13 @@ public class GovernmentButtonManager : MonoBehaviour
     private Transform CorporateFrame;
 
     // Requirements for each government
-    private List<string> DemocraticRequirement;
-    private List<string> OligarchicRequirement;
-    private List<string> DictatorialRequirement;
-    private List<string> ImperialRequirement;
-    private List<string> HiveMindRequirement;
-    private List<string> MachineIntelligenceRequirement;
-    private List<string> CorporateRequirement;
+    private HashSet<string> DemocraticRequirement;
+    private HashSet<string> OligarchicRequirement;
+    private HashSet<string> DictatorialRequirement;
+    private HashSet<string> ImperialRequirement;
+    private HashSet<string> HiveMindRequirement;
+    private HashSet<string> MachineIntelligenceRequirement;
+    private HashSet<string> CorporateRequirement;
 
     private void Awake()
     {
@@ -85,13 +85,13 @@ public class GovernmentButtonManager : MonoBehaviour
         CorporateFrame.gameObject.SetActive(false);
 
         // Set requirements for each government
-        DemocraticRequirement = new List<string>();
-        OligarchicRequirement = new List<string>();
-        DictatorialRequirement = new List<string>();
-        ImperialRequirement = new List<string>();
-        HiveMindRequirement = new List<string>();
-        MachineIntelligenceRequirement = new List<string>();
-        CorporateRequirement = new List<string>();
+        DemocraticRequirement = new HashSet<string>();
+        OligarchicRequirement = new HashSet<string>();
+        DictatorialRequirement = new HashSet<string>();
+        ImperialRequirement = new HashSet<string>();
+        HiveMindRequirement = new HashSet<string>();
+        MachineIntelligenceRequirement = new HashSet<string>();
+        CorporateRequirement = new HashSet<string>();
 
         DemocraticRequirement.Add("{-\"Authoritarian\"}");
         DemocraticRequirement.Add("{-\"Fanatic_Authoritarian\"}");
@@ -124,7 +124,7 @@ public class GovernmentButtonManager : MonoBehaviour
         GovernmentPanel.gameObject.SetActive(!GovernmentPanel.gameObject.activeSelf);
     }
 
-    void SelectGovernment(string government, List<string> requirements, Transform governmentButton)
+    void SelectGovernment(string government, HashSet<string> requirements, Transform governmentButton)
     {
         // Debug.Log(government);
 
@@ -133,7 +133,7 @@ public class GovernmentButtonManager : MonoBehaviour
             governmentButton.gameObject.SetActive(false);
 
             planetData.government_ = "";
-            planetData.governmentRequirement_ = new List<string>();
+            planetData.governmentRequirement_ = new HashSet<string>();
         }
         else
         {
@@ -149,7 +149,9 @@ public class GovernmentButtonManager : MonoBehaviour
 
             planetData.government_ = government;
 
-            planetData.governmentRequirement_ = requirements;
+            // Add government requirement in all planetary requirements set
+            foreach(string requirement in requirements)
+                planetData.governmentRequirement_.Add(requirement);
         }
 
         transform.parent.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();
