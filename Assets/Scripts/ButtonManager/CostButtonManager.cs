@@ -12,7 +12,7 @@ public class CostButtonManager : MonoBehaviour
 
     private void Awake()
     {
-        costPanel_ = transform.parent.Find("CostPanel").gameObject;
+        costPanel_ = transform.parent.parent.parent.parent.Find("ButtonPanels/CostPanel").gameObject;
         costPanelContent_ = costPanel_.transform.Find("Scroll View/Viewport/Content");
         costPanel_.SetActive(false);
     }
@@ -20,8 +20,9 @@ public class CostButtonManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        planetData_ = transform.parent.parent.GetComponent<PlanetData>();
+        planetData_ = transform.parent.parent.parent.parent.parent.GetComponent<PlanetData>();
         gameObject.GetComponent<Button>().onClick.AddListener(ShowCostPanel);
+        costPanel_.transform.Find("Close").GetComponent<Button>().onClick.AddListener(ShowCostPanel);
     }
 
     void ShowCostPanel()

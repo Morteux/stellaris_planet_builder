@@ -10,15 +10,17 @@ public class CivicsButtonManager : MonoBehaviour
 
     private void Awake()
     {
-        CivicsPanel = transform.parent.Find("CivicsPanel");
+        CivicsPanel = transform.parent.parent.parent.parent.Find("ButtonPanels/CivicsPanel");
         CivicsPanel.gameObject.SetActive(false);
     }
+
     // Start is called before the first frame update
     void Start()
     {
-        planetData = transform.parent.parent.GetComponent<PlanetData>();
+        planetData = transform.parent.parent.parent.parent.parent.GetComponent<PlanetData>();
 
         transform.GetComponent<Button>().onClick.AddListener(ShowCivicsPanel);
+        CivicsPanel.Find("Close").GetComponent<Button>().onClick.AddListener(ShowCivicsPanel);
     }
 
     void ShowCivicsPanel()

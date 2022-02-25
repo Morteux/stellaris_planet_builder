@@ -37,16 +37,17 @@ public class GovernmentButtonManager : MonoBehaviour
 
     private void Awake()
     {
-        GovernmentPanel = transform.parent.Find("GovernmentPanel");
+        GovernmentPanel = transform.parent.parent.parent.parent.Find("ButtonPanels/GovernmentPanel");
         GovernmentPanel.gameObject.SetActive(false);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        planetData = transform.parent.parent.GetComponent<PlanetData>();
+        planetData = transform.parent.parent.parent.parent.parent.GetComponent<PlanetData>();
 
         transform.GetComponent<Button>().onClick.AddListener(ShowGovernmentPanel);
+        GovernmentPanel.Find("Close").GetComponent<Button>().onClick.AddListener(ShowGovernmentPanel);
 
         // Get buttons
         DemocraticButton = GovernmentPanel.Find("DemocraticButton");

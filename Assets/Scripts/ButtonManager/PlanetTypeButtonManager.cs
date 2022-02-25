@@ -8,12 +8,16 @@ public class PlanetTypeButtonManager : MonoBehaviour
     public GameObject selectableItemButtonPrefab_;
     private GameObject planetTypePanel_;
     private Transform planetTypeContent_;
+    private PlanetData planetData_;
 
     // Start is called before the first frame update
     void Start()
     {
-        planetTypePanel_ = gameObject.GetComponent<Button>().transform.Find("Panel/PlanetTypePanel").gameObject;
+        planetTypePanel_ = transform.parent.parent.parent.parent.Find("ButtonPanels/PlanetTypePanel").gameObject;
+        planetTypePanel_.transform.Find("Close").GetComponent<Button>().onClick.AddListener(ShowPlanetTypePanel);
+        GetComponent<Button>().onClick.AddListener(ShowPlanetTypePanel);
         planetTypeContent_ = planetTypePanel_.transform.Find("Scroll View/Viewport/Content");
+        planetData_ = transform.parent.parent.parent.parent.parent.GetComponent<PlanetData>();
 
         // Instantiate Planets
         foreach (KeyValuePair<string, Planet> pair in Planet._planets_)
@@ -27,6 +31,13 @@ public class PlanetTypeButtonManager : MonoBehaviour
         }
 
         planetTypePanel_.SetActive(false);
+    }
+
+    public void ShowPlanetTypePanel()
+    {
+        // Debug.Log("ShowPlanetTypePanel");
+
+        planetTypePanel_.SetActive(!planetTypePanel_.activeSelf);
     }
 
     public void ChangePlanetType()
@@ -44,11 +55,13 @@ public class PlanetTypeButtonManager : MonoBehaviour
 
         // Save new planet type
         string planetType = button.GetComponentInChildren<Text>().text.Replace(' ', '_');
-        GetComponent<PlanetData>().planetaryEffects_ = Planet._planets_[planetType].effects_;
-        GetComponent<PlanetData>().planetType_ = planetType;
-        GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Planets/" + planetType);
-        GetComponent<PlanetData>().UpdatePlanetData();
-        GetComponentInChildren<JobsButtonManager>().UpdateJobs();
-        GetComponentInChildren<EffectButtonManager>().UpdateEffects();
+        planetData_.planetaryEffects_ = Planet._planets_[planetType].effects_;
+        planetData_.planetType_ = planetType;
+        planetData_.transform.GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Planets/" + planetType);
+        planetData_.UpdatePlanetData();
+        planetData_.transform.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
+        planetData_.transform.GetComponentInChildren<EffectButtonManager>().UpdateEffects();
     }
+
+    /////////////////////////////////////// HACER LOS REQUISITOS PLANETARIOS
 }

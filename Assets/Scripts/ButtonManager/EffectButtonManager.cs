@@ -12,7 +12,7 @@ public class EffectButtonManager : MonoBehaviour
 
     private void Awake()
     {
-        effectPanel_ = transform.parent.Find("EffectPanel").gameObject;
+        effectPanel_ = transform.parent.parent.parent.parent.Find("ButtonPanels/EffectPanel").gameObject;
         effectPanelContent_ = effectPanel_.transform.Find("Scroll View/Viewport/Content");
         effectPanel_.SetActive(false);
     }
@@ -20,11 +20,12 @@ public class EffectButtonManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        planetData_ = transform.parent.parent.GetComponent<PlanetData>();
-        gameObject.GetComponent<Button>().onClick.AddListener(ShowEffectPanel);
+        planetData_ = transform.parent.parent.parent.parent.parent.GetComponent<PlanetData>();
+        gameObject.GetComponent<Button>().onClick.AddListener(ShowEffectsPanel);
+        effectPanel_.transform.Find("Close").GetComponent<Button>().onClick.AddListener(ShowEffectsPanel);
     }
 
-    void ShowEffectPanel()
+    void ShowEffectsPanel()
     {
         // Debug.Log("ShowEffectPanel");
         effectPanel_.SetActive(!effectPanel_.activeSelf);

@@ -31,7 +31,7 @@ public class PlanetTabManager : MonoBehaviour, IPointerClickHandler
         rightClick = new UnityEvent();
 
         leftClick.AddListener(ShowPlanetPanel);
-        rightClick.AddListener(ShowPlanetTypePanel);
+        // rightClick.AddListener(ShowPlanetTypePanel);
         StartInstantation();
     }
 
@@ -39,8 +39,8 @@ public class PlanetTabManager : MonoBehaviour, IPointerClickHandler
     {
         if (eventData.button == PointerEventData.InputButton.Left)
             leftClick.Invoke();
-        else if (eventData.button == PointerEventData.InputButton.Right)
-            rightClick.Invoke();
+        // else if (eventData.button == PointerEventData.InputButton.Right)
+        //     rightClick.Invoke();
     }
 
     void ShowPlanetPanel()
@@ -55,12 +55,12 @@ public class PlanetTabManager : MonoBehaviour, IPointerClickHandler
         planetPanel_.SetActive(true);
     }
 
-    void ShowPlanetTypePanel()
-    {
-        // Debug.Log("PlanetTabManager::ShowPlanetTypePanel");
+    // public void ShowPlanetTypePanel()
+    // {
+    //     // Debug.Log("PlanetTabManager::ShowPlanetTypePanel");
 
-        planetTypePanel_.SetActive(true);
-    }
+    //     planetTypePanel_.SetActive(!planetTypePanel_.activeSelf);
+    // }
 
     public void StartInstantation()
     {
@@ -71,7 +71,7 @@ public class PlanetTabManager : MonoBehaviour, IPointerClickHandler
 
         // Store panel references
         planetPanel_ = btnPlanet_.transform.Find("Panel").gameObject;
-        planetTypePanel_ = btnPlanet_.transform.Find("Panel/PlanetTypePanel").gameObject;
+        planetTypePanel_ = btnPlanet_.transform.Find("Panel/ButtonPanels/PlanetTypePanel").gameObject;
     }
 
     public void UpdateName(string name)

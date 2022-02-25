@@ -14,8 +14,8 @@ public class RequirementButtonManager : MonoBehaviour
 
     private void Awake()
     {
-        buildPanel_ = transform.parent.Find("BuildPanel").gameObject;
-        requirementPanel_ = transform.parent.Find("RequirementPanel").gameObject;
+        buildPanel_ = transform.parent.parent.parent.parent.Find("BuildPanel").gameObject;
+        requirementPanel_ = transform.parent.parent.parent.parent.Find("ButtonPanels/RequirementPanel").gameObject;
         requirementPanelContent_ = requirementPanel_.transform.Find("Scroll View/Viewport/Content");
         requirementPanel_.SetActive(false);
     }
@@ -24,8 +24,9 @@ public class RequirementButtonManager : MonoBehaviour
     void Start()
     {
         requirementSet = new HashSet<string>();
-        planetData_ = transform.parent.parent.GetComponent<PlanetData>();
+        planetData_ = transform.parent.parent.parent.parent.parent.GetComponent<PlanetData>();
         gameObject.GetComponent<Button>().onClick.AddListener(ShowRequirementPanel);
+        requirementPanel_.transform.Find("Close").GetComponent<Button>().onClick.AddListener(ShowRequirementPanel);
     }
 
     void ShowRequirementPanel()

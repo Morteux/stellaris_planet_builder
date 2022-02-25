@@ -26,6 +26,14 @@ public class PlanetBarManager : MonoBehaviour
     {
         // Debug.Log("PlanetBarManager::AddPlanetTab");
 
+        // Remove all ResourcePrefab instantiated before
+        foreach (Transform child in transform.Find("Planets"))
+        {
+            // Debug.Log(child);
+            foreach (Transform grandchild in child)
+                grandchild.Find("Panel").gameObject.SetActive(false);
+        }
+
         // Copy last planet tab position and add it planetButtonDistance_ at x axis. This is the position for the new planet tab.
         Vector3 buttonPos = transform.Find("Planets").GetChild(transform.Find("Planets").childCount - 1).position;
         buttonPos.x += planetButtonDistance_;
@@ -45,7 +53,7 @@ public class PlanetBarManager : MonoBehaviour
         newPlanetTab.GetComponent<PlanetTabManager>().StartInstantation();
         newPlanetTab.GetComponent<PlanetTabManager>().UpdateName(transform.Find("Planets").childCount.ToString());
     }
-    
+
     // public void ChangeActivePlanet(GameObject panel)
     // {
     //     // Debug.Log("PlanetBarManager::ChangeActivePlanet");

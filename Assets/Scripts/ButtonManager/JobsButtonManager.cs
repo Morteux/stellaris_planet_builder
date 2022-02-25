@@ -12,7 +12,7 @@ public class JobsButtonManager : MonoBehaviour
 
     private void Awake()
     {
-        jobsPanel_ = transform.parent.Find("JobsPanel").gameObject;
+        jobsPanel_ = transform.parent.parent.parent.parent.Find("ButtonPanels/JobsPanel").gameObject;
         jobsPanelContent_ = jobsPanel_.transform.Find("Scroll View/Viewport/Content");
         jobsPanel_.SetActive(false);
     }
@@ -20,8 +20,9 @@ public class JobsButtonManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        planetData_ = transform.parent.parent.GetComponent<PlanetData>();
+        planetData_ = transform.parent.parent.parent.parent.parent.GetComponent<PlanetData>();
         gameObject.GetComponent<Button>().onClick.AddListener(ShowJobPanel);
+        jobsPanel_.transform.Find("Close").GetComponent<Button>().onClick.AddListener(ShowJobPanel);
     }
 
     void ShowJobPanel()

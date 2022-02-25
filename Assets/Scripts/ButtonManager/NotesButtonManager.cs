@@ -9,17 +9,18 @@ public class NotesButtonManager : MonoBehaviour
 
     private void Awake()
     {
-        notesPanel_ = transform.parent.Find("NotesPanel");
+        notesPanel_ = transform.parent.parent.parent.parent.Find("ButtonPanels/NotesPanel");
         notesPanel_.gameObject.SetActive(false);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        transform.GetComponent<Button>().onClick.AddListener(ShowPanel);
+        transform.GetComponent<Button>().onClick.AddListener(ShowNotesPanel);
+        notesPanel_.Find("Close").GetComponent<Button>().onClick.AddListener(ShowNotesPanel);
     }
 
-    void ShowPanel()
+    void ShowNotesPanel()
     {
         notesPanel_.gameObject.SetActive(!notesPanel_.gameObject.activeSelf);
     }

@@ -10,18 +10,19 @@ public class EthicsButtonManager : MonoBehaviour
 
     private void Awake()
     {
-        EthicsPanel = transform.parent.Find("EthicsPanel");
+        EthicsPanel = transform.parent.parent.parent.parent.Find("ButtonPanels/EthicsPanel");
         EthicsPanel.gameObject.SetActive(false);
     }
     // Start is called before the first frame update
     void Start()
     {
-        planetData = transform.parent.parent.GetComponent<PlanetData>();
+        planetData = transform.parent.parent.parent.parent.parent.GetComponent<PlanetData>();
 
-        transform.GetComponent<Button>().onClick.AddListener(ShowEthicssPanel);
+        transform.GetComponent<Button>().onClick.AddListener(ShowEthicsPanel);
+        EthicsPanel.Find("Close").GetComponent<Button>().onClick.AddListener(ShowEthicsPanel);
     }
 
-    void ShowEthicssPanel()
+    void ShowEthicsPanel()
     {
         // Debug.Log("ShowEthicssPanel");
         EthicsPanel.gameObject.SetActive(!EthicsPanel.gameObject.activeSelf);
