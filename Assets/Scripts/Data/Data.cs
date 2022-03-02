@@ -501,11 +501,10 @@ public class Data {
 
                 
             
-            string lineString = "";
-            foreach(string field in requirements)
-                lineString += field + " ";
+            // string lineString = "";
+            // foreach(string field in requirements)
+            //     lineString += field + " ";
             // Debug.Log("lineString: " + lineString);
-
 
             Building._buildings_.Add(name, new Building(name, effects, produces, jobs, upkeep, time, cost, upgrade, downgrade, buildable, unique, requirements, description));
         }
@@ -688,6 +687,7 @@ public class Data {
             string name = lineArray[0];
             Dictionary<Data.Effects, int> effects = new Dictionary<Data.Effects, int>();
             Dictionary<Job, int> jobs = new Dictionary<Job, int>();
+            string[] requirements = new string[0];
             
             // Initialize effects
             // Debug.Log("lineArray[1]: " + lineArray[1]);
@@ -717,7 +717,6 @@ public class Data {
             // Debug.Log("dictionaryString: " + dictionaryString);
             if( dictionaryString.Length > 0 )
                 foreach(string field in Regex.Split(dictionaryString, @"(?<=}),(?={)"))
-                {
                     if( field.Length > 0 )
                     {
                         // Debug.Log("field: " + field);
@@ -732,9 +731,15 @@ public class Data {
                             jobs.Add(new Job("INVALID_" + subfields[0]), index);
                         }
                     }
-                }
+            
+            // Initialize requirements
+            string arrayString = lineArray[3].Substring(1, lineArray[3].Length - 2);  // Remove square brackets
+            
+            // Debug.Log("arrayString: " + arrayString);
+            if( arrayString.Length > 0 )
+                requirements = Regex.Split(arrayString, @"(?<=}),(?={)");
 
-            Planet._planets_.Add(name, new Planet(name, effects, jobs));
+            Planet._planets_.Add(name, new Planet(name, effects, jobs, requirements));
         }
 
         Debug.Log("Planets loaded: " + Planet._planets_.Count);

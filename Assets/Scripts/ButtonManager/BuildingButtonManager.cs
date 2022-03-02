@@ -7,22 +7,20 @@ public class BuildingButtonManager : MonoBehaviour
 {
     [System.NonSerialized] public Building building;
     private GameObject BuildingsPanel;
-    private Button btnBuilding_;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Debug.Log("Start");
+        // Debug.Log("BuildingButtonManager::Start");
         BuildingsPanel = transform.parent.parent.parent.parent.parent.Find("BuildingsPanel").gameObject;
+        transform.Find("Disabled").gameObject.SetActive(false);
 
-        btnBuilding_ = gameObject.GetComponent<Button>();
-        btnBuilding_.onClick.AddListener(AddBuildingToNextSlot);
+        GetComponent<Button>().onClick.AddListener(AddBuildingToNextSlot);
     }
 
     void AddBuildingToNextSlot()
     {
-        // Debug.Log("AddBuildingToNextSlot");
-        // BuildingsPanel.GetComponent<SlotsManager>().AddNewBuilding(Building._buildings_["Research_Labs"]);
+        // Debug.Log("BuildingButtonManager::AddBuildingToNextSlot");
 
         // Debug.Log(building.name_);
         SlotsManager slotManager = BuildingsPanel.GetComponent<SlotsManager>();
@@ -33,15 +31,18 @@ public class BuildingButtonManager : MonoBehaviour
 
             if (building.unique_ == "Yes")
             {
+                // Debug.Log("is unique");
                 transform.Find("Disabled").gameObject.SetActive(true);
-                btnBuilding_.interactable = false;
+                GetComponent<Button>().interactable = false;
             }
         }
     }
 
     public void ActivateBuildingButton()
     {
+        // Debug.Log("BuildingButtonManager::ActivateBuildingButton");
+
         transform.Find("Disabled").gameObject.SetActive(false);
-        btnBuilding_.interactable = true;
+        GetComponent<Button>().interactable = true;
     }
 }

@@ -32,7 +32,7 @@ public class BuildManager : MonoBehaviour
             bool isCompatible = true;
             string negativeRequirement = "";
 
-            foreach( string requirement in pair.Value.requirements_)
+            foreach (string requirement in pair.Value.requirements_)
             {
                 if (requirement[1] == '+')
                     // Calculate negative requirement to check if there are two incompatible requirements
@@ -90,6 +90,36 @@ public class BuildManager : MonoBehaviour
                         NewBuildingButtonPrefab.transform.Find("Description/UpkeepIcon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + pairUpkeep.Key.ToString());
                         NewBuildingButtonPrefab.transform.Find("Description/UpkeepIcon").GetComponent<Image>().color = new Color32(255, 255, 255, 255);
                     }
+            }
+        }
+    }
+
+    public void UpdateBuildingButtonsByRequirements()
+    {
+        foreach (Transform buildButton in Content)
+        {
+            if (buildButton.parent == Content)
+            {
+                bool isCompatible = true;
+                string negativeRequirement = "";
+                Building building = Building._buildings_[buildButton.Find("Name").GetComponent<Text>().text.Replace(" ", "_")];
+
+                // Iterate through building requirements
+                foreach (string requirement in building.requirements_)
+                {
+                    if (requirement[1] == '+')
+                        // Calculate negative requirement to check if there are two incompatible requirements
+                        negativeRequirement = requirement.Substring(0, 1) + '-' + requirement.Substring(2, requirement.Length - 2);
+                    else
+                        // Calculate negative requirement to check if there are two incompatible requirements
+                        negativeRequirement = requirement.Substring(0, 1) + '+' + requirement.Substring(2, requirement.Length - 2);
+
+                    // If negativeRequirement belongs to planetData.requirements_, this building is incompatible with actual requirements
+                    isCompatible = !planetData.requirements_.Contains(negativeRequirement);
+                }
+
+                if (!isCompatible || building.buildable_ != "Yes")
+                    buildButton.gameObject.SetActive(false);
             }
         }
     }

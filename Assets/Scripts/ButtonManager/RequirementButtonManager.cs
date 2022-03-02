@@ -107,7 +107,7 @@ public class RequirementButtonManager : MonoBehaviour
         }
 
         planetData_.requirements_ = requirementSet;
-        buildPanel_.GetComponent<BuildManager>().UpdateBuildingButtons();
+        buildPanel_.GetComponent<BuildManager>().UpdateBuildingButtonsByRequirements();
 
         transform.Find("Incompatible").gameObject.SetActive(isIncompatible);
     }

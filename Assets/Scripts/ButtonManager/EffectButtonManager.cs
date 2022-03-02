@@ -41,7 +41,7 @@ public class EffectButtonManager : MonoBehaviour
             foreach (Transform child in effectPanelContent_)
                 GameObject.Destroy(child.gameObject);
 
-        foreach (KeyValuePair<Data.Effects, int> pair in planetData_.planetaryEffects_)
+        foreach (KeyValuePair<Data.Effects, int> pair in planetData_.planetTypeEffects_)
         {
             // Debug.Log(pair);
             GameObject NewResourcePrefab = Instantiate(ResourcePrefab, effectPanelContent_.position, effectPanelContent_.rotation, effectPanelContent_);

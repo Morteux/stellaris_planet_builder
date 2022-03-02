@@ -30,8 +30,9 @@ public class PlanetBarManager : MonoBehaviour
         foreach (Transform child in transform.Find("Planets"))
         {
             // Debug.Log(child);
-            foreach (Transform grandchild in child)
-                grandchild.Find("Panel").gameObject.SetActive(false);
+            if (child.parent == transform)
+                foreach (Transform grandchild in child)
+                    grandchild.Find("Panel").gameObject.SetActive(false);
         }
 
         // Copy last planet tab position and add it planetButtonDistance_ at x axis. This is the position for the new planet tab.

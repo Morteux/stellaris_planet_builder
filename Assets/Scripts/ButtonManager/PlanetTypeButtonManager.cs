@@ -55,12 +55,21 @@ public class PlanetTypeButtonManager : MonoBehaviour
 
         // Save new planet type
         string planetType = button.GetComponentInChildren<Text>().text.Replace(' ', '_');
-        planetData_.planetaryEffects_ = Planet._planets_[planetType].effects_;
+
+        // Cast from string[] requirements to HashSet<string> requirements
+        planetData_.planetTypeRequirement_ = new HashSet<string>();
+        foreach(string requirement in Planet._planets_[planetType].requirements_)
+            planetData_.planetTypeRequirement_.Add(requirement);
+
+        planetData_.planetTypeEffects_ = Planet._planets_[planetType].effects_;
         planetData_.planetType_ = planetType;
         planetData_.transform.GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Planets/" + planetType);
+
+        // Update planet data
         planetData_.UpdatePlanetData();
         planetData_.transform.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
         planetData_.transform.GetComponentInChildren<EffectButtonManager>().UpdateEffects();
+        planetData_.transform.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();
     }
 
     /////////////////////////////////////// HACER LOS REQUISITOS PLANETARIOS
