@@ -78,7 +78,7 @@ public class BuildManager : MonoBehaviour
                 foreach (KeyValuePair<Data.Effects, int> effect in pair.Value.effects_)
                 {
                     GameObject NewResourcePrefab = Instantiate(ResourcePrefab, ButtonContent.position, ButtonContent.rotation, ButtonContent);
-                    NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + effect.Key.ToString());
+                    NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Effects/" + effect.Key.ToString());
                     NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = effect.Value + "% " + effect.Key.ToString().Replace('_', ' ');
                 }
 
@@ -118,8 +118,11 @@ public class BuildManager : MonoBehaviour
                     isCompatible = !planetData.requirements_.Contains(negativeRequirement);
                 }
 
+
                 if (!isCompatible || building.buildable_ != "Yes")
                     buildButton.gameObject.SetActive(false);
+                else
+                    buildButton.gameObject.SetActive(true);
             }
         }
     }

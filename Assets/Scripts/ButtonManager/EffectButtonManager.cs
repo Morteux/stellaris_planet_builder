@@ -56,7 +56,7 @@ public class EffectButtonManager : MonoBehaviour
             // Debug.Log(pair);
             GameObject NewResourcePrefab = Instantiate(ResourcePrefab, effectPanelContent_.position, effectPanelContent_.rotation, effectPanelContent_);
             // NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Effects_to_string(pair.Key));
-            NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + pair.Key.ToString());
+            NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Effects/" + pair.Key.ToString());
             // NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = pair.Value.ToString() + "% \t" + Data.Effects_to_string(pair.Key).Replace('_', ' ');
             NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = pair.Value.ToString() + "% \t" + pair.Key.ToString().Replace('_', ' ');
         }
