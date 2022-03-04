@@ -13313,6 +13313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BuildingButtonPrefab: {fileID: 7077082242157628503, guid: 7539a878118abb6429721ea2fd6c4d16, type: 3}
   ResourcePrefab: {fileID: 5914768673893045362, guid: 4d8fc091df7256243b77f308a88b055a, type: 3}
+  IconResourcePrefab: {fileID: 8812988519411077954, guid: 68fcac25ab2529247aaf546df1d19137, type: 3}
 --- !u!1 &3465558271608127073
 GameObject:
   m_ObjectHideFlags: 0

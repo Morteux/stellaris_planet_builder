@@ -7,6 +7,7 @@ public class BuildManager : MonoBehaviour
 {
     public GameObject BuildingButtonPrefab;
     public GameObject ResourcePrefab;
+    public GameObject IconResourcePrefab;
     private PlanetData planetData;
     private Dictionary<string, GameObject> BuildingButtons;
     private Transform Content;
@@ -83,12 +84,16 @@ public class BuildManager : MonoBehaviour
                 }
 
                 // REWORK REWORK REWORK REWORK REWORK REWORK REWORK REWORK REWORK REWORK REWORK REWORK REWORK REWORK
+                // Transform UpkeepContent = NewBuildingButtonPrefab.transform.Find("Description/Upkeep/Scroll View/Viewport/Content");
+                Transform UpkeepContent = NewBuildingButtonPrefab.transform.Find("Description/Upkeep/Content");
                 foreach (KeyValuePair<Data.Resource, int> pairUpkeep in pair.Value.upkeep_)
                     if (pairUpkeep.Value < 0)
                     {
-                        NewBuildingButtonPrefab.transform.Find("Description/UpkeepCounter").GetComponent<Text>().text = (-1 * pairUpkeep.Value).ToString();
-                        NewBuildingButtonPrefab.transform.Find("Description/UpkeepIcon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + pairUpkeep.Key.ToString());
-                        NewBuildingButtonPrefab.transform.Find("Description/UpkeepIcon").GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+                        Debug.Log(pairUpkeep.Key);
+                        GameObject NewIconResourcePrefab = Instantiate(IconResourcePrefab, UpkeepContent.position, UpkeepContent.rotation, UpkeepContent);
+                        NewIconResourcePrefab.transform.Find("UpkeepCounter").GetComponent<Text>().text = (-1 * pairUpkeep.Value).ToString();
+                        NewIconResourcePrefab.transform.Find("UpkeepIcon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + pairUpkeep.Key.ToString());
+                        NewIconResourcePrefab.transform.Find("UpkeepIcon").GetComponent<Image>().color = new Color32(255, 255, 255, 255);
                     }
             }
         }
