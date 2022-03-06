@@ -42,8 +42,6 @@ public class BuildManager : MonoBehaviour
                     // Calculate negative requirement to check if there are two incompatible requirements
                     negativeRequirement = requirement.Substring(0, 1) + '+' + requirement.Substring(2, requirement.Length - 2);
 
-                // Debug.Log(planetData.requirements_.Count);
-
                 // If negativeRequirement belongs to planetData.requirements_, this building is incompatible with actual requirements
                 isCompatible = !planetData.requirements_.Contains(negativeRequirement);
             }
@@ -64,8 +62,6 @@ public class BuildManager : MonoBehaviour
                     NewBuildingButtonPrefab.transform.Find("BuildingBackground").GetComponent<Image>().color = new Color32(22, 161, 231, 255);
                 }
 
-                // Debug.Log(pair.Value.requirements_);
-
                 // Get tranform where instantiate info for this building
                 Transform ButtonContent = NewBuildingButtonPrefab.transform.Find("Scroll View/Viewport/Content");
 
@@ -83,13 +79,11 @@ public class BuildManager : MonoBehaviour
                     NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = effect.Value + "% " + effect.Key.ToString().Replace('_', ' ');
                 }
 
-                // REWORK REWORK REWORK REWORK REWORK REWORK REWORK REWORK REWORK REWORK REWORK REWORK REWORK REWORK
                 // Transform UpkeepContent = NewBuildingButtonPrefab.transform.Find("Description/Upkeep/Scroll View/Viewport/Content");
                 Transform UpkeepContent = NewBuildingButtonPrefab.transform.Find("Description/Upkeep/Content");
                 foreach (KeyValuePair<Data.Resource, int> pairUpkeep in pair.Value.upkeep_)
                     if (pairUpkeep.Value < 0)
                     {
-                        Debug.Log(pairUpkeep.Key);
                         GameObject NewIconResourcePrefab = Instantiate(IconResourcePrefab, UpkeepContent.position, UpkeepContent.rotation, UpkeepContent);
                         NewIconResourcePrefab.transform.Find("UpkeepCounter").GetComponent<Text>().text = (-1 * pairUpkeep.Value).ToString();
                         NewIconResourcePrefab.transform.Find("UpkeepIcon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + pairUpkeep.Key.ToString());
