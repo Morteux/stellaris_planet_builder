@@ -105,6 +105,29 @@ public class SlotsManager : MonoBehaviour
         planet.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
     }
 
+    public void ChangeCapitalBuilding(Building building)
+    {
+        // Debug.Log("ChangeCapitalBuilding::building.name_:" + building.name_);
+
+        childsSlots[0].GetComponent<Button>().interactable = true;
+        childsSlots[0].GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Buildings/" + building.name_);
+
+        // Is always unique
+        childsSlotsBackground[0].GetComponent<Image>().color = new Color32(22, 161, 231, 255);
+
+        // Show upgrade and hide downgrade
+        childsSlotsUpgrade[0].gameObject.SetActive(true);
+        childsSlotsDowngrade[0].gameObject.SetActive(false);
+
+        slotsBuildings[0] = building;
+
+        UpdatePlanetBuildings();
+        planet.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();
+        planet.GetComponentInChildren<CostButtonManager>().UpdateCosts();
+        planet.GetComponentInChildren<EffectButtonManager>().UpdateEffects();
+        planet.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
+    }
+
     public void UpgradeBuilding()
     {
         // Debug.Log("UpgradeBuilding");

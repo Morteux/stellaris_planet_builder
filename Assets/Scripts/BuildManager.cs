@@ -117,7 +117,6 @@ public class BuildManager : MonoBehaviour
                     isCompatible = !planetData.requirements_.Contains(negativeRequirement);
                 }
 
-
                 if (!isCompatible || building.buildable_ != "Yes")
                     buildButton.gameObject.SetActive(false);
                 else
