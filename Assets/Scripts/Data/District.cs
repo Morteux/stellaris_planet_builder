@@ -10,7 +10,7 @@ public class District
             name_ = n;
         }
 
-        public District(string n, Dictionary<Data.Resource, int> p, Dictionary<Job, int> j, Dictionary<Data.Resource, int> u, int t, Dictionary<Data.Resource, int> c, string[] r)
+        public District(string n, Dictionary<Data.Resource, int> p, Dictionary<Job, int> j, Dictionary<Data.Resource, int> u, int t, Dictionary<Data.Resource, int> c, string[] r, string co)
         {
             name_ = n;
             production_ = p;
@@ -19,6 +19,7 @@ public class District
             time_ = t;
             cost_ = c;
             requirements_ = r;
+            color_ = co;
         }
 
         public string name_;
@@ -28,6 +29,7 @@ public class District
         public int time_;
         public Dictionary<Data.Resource, int> cost_;
         public string[] requirements_;
+        public string color_;
 
         public static Dictionary<string, District> _districts_;
 }

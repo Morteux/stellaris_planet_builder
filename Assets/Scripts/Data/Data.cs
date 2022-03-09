@@ -553,6 +553,7 @@ public class Data {
             int time = 0;
             Dictionary<Data.Resource, int> cost = new Dictionary<Data.Resource, int>();
             string[] requirements = new string[0];
+            string color = "";
             
             // Initialize production
             // Debug.Log("lineArray[1]: " + lineArray[1]);
@@ -643,8 +644,12 @@ public class Data {
             // Debug.Log("arrayString: " + arrayString);
             if( arrayString.Length > 0 )
                 requirements = Regex.Split(arrayString, @"(?<=}),(?={)");
+                
 
-            District._districts_.Add(name, new District(name, production, jobs, upkeep, time, cost, requirements));
+            // Initialize color
+            color = lineArray[7];
+
+            District._districts_.Add(name, new District(name, production, jobs, upkeep, time, cost, requirements, color));
         }
 
         Debug.Log("Districts loaded: " + District._districts_.Count);
