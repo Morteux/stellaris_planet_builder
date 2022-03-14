@@ -29,7 +29,7 @@ public class DistrictManager : MonoBehaviour
         // Initialize districtNum by default
         districtNum_ = 5;
 
-        // Set default districts
+        // Initialize default districts
         districtNames_ = new List<string>();
         districtNames_.Add("City_District");
         districtNames_.Add("Industrial_District");
@@ -37,33 +37,59 @@ public class DistrictManager : MonoBehaviour
         districtNames_.Add("Mining_District");
         districtNames_.Add("Agriculture_District");
 
-        // Initialize PlanetData districts
-        foreach (string districtName in districtNames_)
-            planetData_.district_.Add(districtName, 0);
-
-        // Set planetSizeSlider attributes
+        // Initialize planetSizeSlider attributes
         planetSizeSlider_ = transform.Find("PlanetSizeSlider/Slider");
         planetSizeSlider_.GetComponent<Slider>().onValueChanged.AddListener(UpdateDistrictsSize);
 
-        // Initialize district transforms
-        districtTransform_ = new List<Transform>();
-
-        foreach(string districtName in districtNames_)
-        {
-            // Instantiate new district slot
-            GameObject NewDistrictSlotPrefab = Instantiate(districtSlotPrefab, districtContent_.position, districtContent_.rotation, districtContent_);
-            NewDistrictSlotPrefab.GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Districts/" + districtName);
-            NewDistrictSlotPrefab.transform.Find("SelectedDistrictSlot").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Districts/Colors/" + District._districts_[districtName].color_ + "_Selected");
-            NewDistrictSlotPrefab.transform.Find("UnselectedDistrictSlot").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Districts/Colors/" + District._districts_[districtName].color_ + "_Unselected");
-            
-            districtTransform_.Add(NewDistrictSlotPrefab.transform);
-        }
+        // Initialize district slots
+        InstantiateNewDistrictSlots();
 
         // Initialize district button listeners by default
         SetDistrictButtonListeners();
 
         // Initialize planet size by 20
         UpdateDistrictsSize(20);
+    }
+
+    void InstantiateNewDistrictSlots()
+    {
+        // Remove all BuildingButtonPrefab instantiated before
+        if (districtContent_.childCount > 0)
+            foreach (Transform child in districtContent_)
+                GameObject.Destroy(child.gameObject);
+
+        // Reset actual districts
+        planetData_.district_ = new Dictionary<string, int>();
+
+        // Initialize PlanetData districts
+        foreach (string districtName in districtNames_)
+            planetData_.district_.Add(districtName, 0);
+
+        // Initialize district transforms
+        districtTransform_ = new List<Transform>();
+        foreach (string districtName in districtNames_)
+        {
+            // Instantiate new district slot
+            GameObject NewDistrictSlotPrefab = Instantiate(districtSlotPrefab, districtContent_.position, districtContent_.rotation, districtContent_);
+            NewDistrictSlotPrefab.GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Districts/" + districtName);
+            NewDistrictSlotPrefab.transform.Find("SelectedDistrictSlot").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Districts/Colors/" + District._districts_[districtName].color_ + "_Selected");
+            NewDistrictSlotPrefab.transform.Find("UnselectedDistrictSlot").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Districts/Colors/" + District._districts_[districtName].color_ + "_Unselected");
+
+            districtTransform_.Add(NewDistrictSlotPrefab.transform);
+        }
+    }
+
+    // Set district buttons listeners
+    void SetDistrictButtonListeners()
+    {
+        // Debug.Log("SetDistrictButtonListeners");
+
+        for (int i = 0; i < districtNum_; ++i)
+        {
+            int ind = i;    // Make a copy of i instead use the reference to i
+            districtTransform_[ind].Find("SelectedDistrictSlot").GetComponent<Button>().onClick.AddListener(delegate { ChangeDistrictCounter(districtTransform_[ind], districtNames_[ind], 1); });
+            districtTransform_[ind].Find("UnselectedDistrictSlot").GetComponent<Button>().onClick.AddListener(delegate { ChangeDistrictCounter(districtTransform_[ind], districtNames_[ind], -1); });
+        }
     }
 
     void UpdateDistrictsSize(float newPlanetSize)
@@ -77,35 +103,14 @@ public class DistrictManager : MonoBehaviour
         UpdateDistrictsSlot();
     }
 
-    // Change district type by government and planet type
-    void ChangeDistrictType()
-    {
-        switch (planetData_.planetType_)
-        {
-            case "Ecumenopolis":
-                break;
-            case "Ringworld":
-                break;
-            case "Shattered_Ringworld":
-                break;
-            case "Habitat":
-                break;
-            case "Machine":
-                break;
-            case "Hive":
-                break;
-            default: return;
-        }
-    }
-
     // Increment or decrement districtName build in this planet
     // Mode = 1, increment
     // Mode = -1, decrement
     void ChangeDistrictCounter(Transform district, string districtName, int mode)
     {
-        Debug.Log("ChangeDistrictCounter");
-        Debug.Log(district);
-        Debug.Log(districtName);
+        // Debug.Log("ChangeDistrictCounter");
+        // Debug.Log(district);
+        // Debug.Log(districtName);
 
         int selected = int.Parse(district.Find("SelectedDistrictSlot/Counter").GetComponent<Text>().text);
         int unselected = int.Parse(district.Find("UnselectedDistrictSlot/Counter").GetComponent<Text>().text);
@@ -174,16 +179,117 @@ public class DistrictManager : MonoBehaviour
                 districtTransform_[i].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
     }
 
-    // Set district buttons listeners
-    void SetDistrictButtonListeners()
+    // Change district type by government and planet type
+    public void UpdateDistrictType()
     {
-        // Debug.Log("SetDistrictButtonListeners");
+        Debug.Log("ChangeDistrictType");
 
-        for (int i = 0; i < districtNum_; ++i)
+        // Set new districts
+        districtNames_ = new List<string>();
+        switch (planetData_.planetType_)
         {
-            int ind = i;    // Make a copy of i instead use the reference to i
-            districtTransform_[ind].Find("SelectedDistrictSlot").GetComponent<Button>().onClick.AddListener(delegate { ChangeDistrictCounter(districtTransform_[ind], districtNames_[ind], 1); });
-            districtTransform_[ind].Find("UnselectedDistrictSlot").GetComponent<Button>().onClick.AddListener(delegate { ChangeDistrictCounter(districtTransform_[ind], districtNames_[ind], -1); });
+            case "Ecumenopolis":
+                CheckRequirementsAndAddDistrictName("Residential_Arcology");
+                CheckRequirementsAndAddDistrictName("Foundry_Arcology");
+                CheckRequirementsAndAddDistrictName("Industrial_Arcology");
+                CheckRequirementsAndAddDistrictName("Leisure_Arcology");
+                CheckRequirementsAndAddDistrictName("Sanctuary_Arcology");
+                CheckRequirementsAndAddDistrictName("Administrative_Arcology");
+                CheckRequirementsAndAddDistrictName("Ecclesiastical_Arcology");
+                break;
+            case "Ringworld":
+                CheckRequirementsAndAddDistrictName("City_Segment");
+                CheckRequirementsAndAddDistrictName("Hive_Segment");
+                CheckRequirementsAndAddDistrictName("Nexus_Segment");
+                CheckRequirementsAndAddDistrictName("Commercial_Segment");
+                CheckRequirementsAndAddDistrictName("Generator_Segment");
+                CheckRequirementsAndAddDistrictName("Research_Segment");
+                CheckRequirementsAndAddDistrictName("Agricultural_Segment");
+                CheckRequirementsAndAddDistrictName("Industrial_Segment");
+                break;
+            case "Shattered_Ringworld":
+                CheckRequirementsAndAddDistrictName("City_Segment");
+                CheckRequirementsAndAddDistrictName("Hive_Segment");
+                CheckRequirementsAndAddDistrictName("Nexus_Segment");
+                CheckRequirementsAndAddDistrictName("Commercial_Segment");
+                CheckRequirementsAndAddDistrictName("Generator_Segment");
+                CheckRequirementsAndAddDistrictName("Research_Segment");
+                CheckRequirementsAndAddDistrictName("Agricultural_Segment");
+                CheckRequirementsAndAddDistrictName("Industrial_Segment");
+                break;
+            case "Habitat":
+                CheckRequirementsAndAddDistrictName("Habitation_District");
+                CheckRequirementsAndAddDistrictName("Trade_Habitat_District");
+                CheckRequirementsAndAddDistrictName("Leisure_Habitat_District");
+                CheckRequirementsAndAddDistrictName("Astro-Mining_Bay");
+                CheckRequirementsAndAddDistrictName("Reactor_Habitat_District");
+                CheckRequirementsAndAddDistrictName("Research_Habitat_District");
+                CheckRequirementsAndAddDistrictName("Industrial_Habitat_District");
+                break;
+            case "Machine":
+                CheckRequirementsAndAddDistrictName("Nexus_District");
+                CheckRequirementsAndAddDistrictName("Industrial_District");
+                CheckRequirementsAndAddDistrictName("Generator_District");
+                CheckRequirementsAndAddDistrictName("Mining_District");
+                CheckRequirementsAndAddDistrictName("Agriculture_District");
+                break;
+            case "Hive":
+                CheckRequirementsAndAddDistrictName("Hive_District");
+                CheckRequirementsAndAddDistrictName("Industrial_District");
+                CheckRequirementsAndAddDistrictName("Generator_District");
+                CheckRequirementsAndAddDistrictName("Mining_District");
+                CheckRequirementsAndAddDistrictName("Agriculture_District");
+                break;
+            default:
+                CheckRequirementsAndAddDistrictName("City_District");
+                CheckRequirementsAndAddDistrictName("Industrial_District");
+                CheckRequirementsAndAddDistrictName("Generator_District");
+                CheckRequirementsAndAddDistrictName("Mining_District");
+                CheckRequirementsAndAddDistrictName("Agriculture_District");
+                break;
         }
+
+        districtNum_ = districtNames_.Count;
+
+        // Initialize district slots
+        InstantiateNewDistrictSlots();
+
+        // Initialize district button listeners by default
+        SetDistrictButtonListeners();
+
+        // Initialize planet size by 20
+        UpdateDistrictsSize(20);
+    }
+
+    void CheckRequirementsAndAddDistrictName(string districtName)
+    {
+        // Debug.Log("CheckRequirementsAndAddDistrictName");
+        Debug.Log(districtName);
+        bool check = true;
+
+        // Check if actually meets all the requirements
+        foreach (string requirement in District._districts_[districtName].requirements_)
+        {
+            Debug.Log(requirement);
+
+            string negativeRequirement = "";
+
+            if (requirement[1] == '+')
+                // Calculate negative requirement to check if there are two incompatible requirements
+                negativeRequirement = requirement.Substring(0, 1) + '-' + requirement.Substring(2, requirement.Length - 2);
+            else
+                // Calculate negative requirement to check if there are two incompatible requirements
+                negativeRequirement = requirement.Substring(0, 1) + '+' + requirement.Substring(2, requirement.Length - 2);
+
+            if (planetData_.governmentRequirement_.Contains(negativeRequirement))
+                check = false;
+            if (planetData_.planetTypeRequirement_.Contains(negativeRequirement))
+                check = false;
+
+            Debug.Log(check);
+        }
+
+        if (check)
+            districtNames_.Add(districtName);
     }
 }

@@ -217,8 +217,9 @@ public class GovernmentButtonManager : MonoBehaviour
         }
 
         planetData.UpdatePlanetData();
+        transform.parent.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();
+        planetData.transform.GetComponentInChildren<DistrictManager>().UpdateDistrictType();
         transform.parent.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
         transform.parent.GetComponentInChildren<EffectButtonManager>().UpdateEffects();
-        transform.parent.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();
     }
 }

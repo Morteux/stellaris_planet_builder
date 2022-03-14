@@ -645,6 +645,8 @@ public class Data {
             if( arrayString.Length > 0 )
                 requirements = Regex.Split(arrayString, @"(?<=}),(?={)");
                 
+            // foreach( string requirement in requirements)
+            //     Debug.Log(requirement);
 
             // Initialize color
             color = lineArray[7];

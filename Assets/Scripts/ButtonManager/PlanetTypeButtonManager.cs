@@ -67,9 +67,10 @@ public class PlanetTypeButtonManager : MonoBehaviour
 
         // Update planet data
         planetData_.UpdatePlanetData();
+        planetData_.transform.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();
+        planetData_.transform.GetComponentInChildren<DistrictManager>().UpdateDistrictType();
         planetData_.transform.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
         planetData_.transform.GetComponentInChildren<EffectButtonManager>().UpdateEffects();
-        planetData_.transform.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();
     }
 
     /////////////////////////////////////// HACER LOS REQUISITOS PLANETARIOS
