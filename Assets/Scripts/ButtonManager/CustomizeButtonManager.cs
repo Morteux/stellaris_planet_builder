@@ -16,6 +16,9 @@ public class CustomizeButtonManager : MonoBehaviour
     private GameObject percentageScrollView_;
     private GameObject jobsScrollView_;
     private PlanetData planetData_;
+    private bool isValueCallback_;
+    private bool isPercentageCallback_;
+    private bool isJobsCallback_;
 
     // Start is called before the first frame update
     void Start()
@@ -108,6 +111,10 @@ public class CustomizeButtonManager : MonoBehaviour
         jobsScrollView_.SetActive(false);
 
         customizationPanel_.gameObject.SetActive(false);
+
+        isValueCallback_ = true;
+        isPercentageCallback_ = true;
+        isJobsCallback_ = true;
     }
 
     void ShowCustomizationPanel()
@@ -148,16 +155,18 @@ public class CustomizeButtonManager : MonoBehaviour
     void ChangeValueResourcesInputField()
     {
         // Debug.Log("CustomizeButtonManager::ChangeValueResourcesInputField");
+        if (isValueCallback_)
+        {
+            GameObject item = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
 
-        GameObject item = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+            int.TryParse(item.transform.parent.Find("InputField").GetComponent<InputField>().text, out int actualValue);
 
-        int.TryParse(item.transform.parent.Find("InputField").GetComponent<InputField>().text, out int actualValue);
+            planetData_.customizeResources_[Data.String_to_Resource(item.transform.parent.Find("Name").GetComponent<Text>().text.Replace(' ', '_'))] = actualValue;
 
-        planetData_.customizeResources_[Data.String_to_Resource(item.transform.parent.Find("Name").GetComponent<Text>().text.Replace(' ', '_'))] = actualValue;
+            item.transform.parent.Find("InputField").GetComponent<InputField>().text = actualValue.ToString();
 
-        item.transform.parent.Find("InputField").GetComponent<InputField>().text = actualValue.ToString();
-
-        planetData_.UpdatePlanetData();
+            planetData_.UpdatePlanetData();
+        }
     }
 
     // Function for plus and minus button. Increase or decrease actualValue by value
@@ -183,30 +192,79 @@ public class CustomizeButtonManager : MonoBehaviour
     void ChangeValueJobsInputField()
     {
         // Debug.Log("CustomizeButtonManager::ChangeValueJobsInputField");
+        if (isJobsCallback_)
+        {
+            GameObject item = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
 
-        GameObject item = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+            int.TryParse(item.transform.parent.Find("InputField").GetComponent<InputField>().text, out int actualValue);
 
-        int.TryParse(item.transform.parent.Find("InputField").GetComponent<InputField>().text, out int actualValue);
+            planetData_.customizeJobs_[Job._jobs_[item.transform.parent.Find("Name").GetComponent<Text>().text.Replace(' ', '_')]] = actualValue;
 
-        planetData_.customizeJobs_[Job._jobs_[item.transform.parent.Find("Name").GetComponent<Text>().text.Replace(' ', '_')]] = actualValue;
+            item.transform.parent.Find("InputField").GetComponent<InputField>().text = actualValue.ToString();
 
-        item.transform.parent.Find("InputField").GetComponent<InputField>().text = actualValue.ToString();
-
-        planetData_.UpdatePlanetData();
-        planetData_.transform.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
+            planetData_.UpdatePlanetData();
+            planetData_.transform.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
+        }
     }
 
     // Function for percentage slider
     void ChangePercentageResources(float value)
     {
         // Debug.Log("CustomizeButtonManager::ChangePercentage");
+        if (isPercentageCallback_)
+        {
+            GameObject item = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
 
-        GameObject item = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+            planetData_.percentageResources_[Data.String_to_Resource(item.transform.parent.Find("Name").GetComponent<Text>().text.Replace(' ', '_'))] = value;
 
-        planetData_.percentageResources_[Data.String_to_Resource(item.transform.parent.Find("Name").GetComponent<Text>().text.Replace(' ', '_'))] = value;
+            item.transform.parent.Find("Value").GetComponent<Text>().text = (int)(value * 100) + "%";
 
-        item.transform.parent.Find("Value").GetComponent<Text>().text = (int)(value * 100) + "%";
+            planetData_.UpdatePlanetData();
+        }
+    }
 
-        planetData_.UpdatePlanetData();
+    public void LoadJobs(Dictionary<Job, int> customizeJobs)
+    {
+        Transform jobsContent = jobsScrollView_.transform.Find("Viewport/Content");
+
+        isJobsCallback_ = false;
+        foreach (KeyValuePair<Job, int> job in customizeJobs)
+        {
+            foreach (Transform child in jobsContent)
+                if (child.parent == jobsContent && child.Find("Name").GetComponent<Text>().text == job.Key.name_.Replace('_', ' '))
+                    child.Find("InputField").GetComponent<InputField>().text = job.Value.ToString();
+        }
+        isJobsCallback_ = true;
+    }
+
+    public void LoadValues(Dictionary<Data.Resource, int> customizeResources)
+    {
+        Transform valueContent = valueScrollView_.transform.Find("Viewport/Content");
+
+        isValueCallback_ = false;
+        foreach (KeyValuePair<Data.Resource, int> resource in customizeResources)
+        {
+            foreach (Transform child in valueContent)
+                if (child.parent == valueContent && child.Find("Name").GetComponent<Text>().text == resource.Key.ToString().Replace('_', ' '))
+                    child.Find("InputField").GetComponent<InputField>().text = resource.Value.ToString();
+        }
+        isValueCallback_ = true;
+    }
+
+    public void LoadPercentage(Dictionary<Data.Resource, float> percentageResources)
+    {
+        Transform percentageContent = percentageScrollView_.transform.Find("Viewport/Content");
+
+        isPercentageCallback_ = false;
+        foreach (KeyValuePair<Data.Resource, float> resource in percentageResources)
+        {
+            foreach (Transform child in percentageContent)
+                if (child.parent == percentageContent && child.Find("Name").GetComponent<Text>().text == resource.Key.ToString().Replace('_', ' '))
+                {
+                    child.Find("Slider").GetComponent<Slider>().value = resource.Value;
+                    child.Find("Value").GetComponent<Text>().text = (int)(resource.Value * 100) + "%";
+                }
+        }
+        isPercentageCallback_ = true;
     }
 }

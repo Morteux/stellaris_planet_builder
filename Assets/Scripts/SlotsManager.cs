@@ -141,10 +141,10 @@ public class SlotsManager : MonoBehaviour
             }
 
         UpdatePlanetBuildings();
-        planet.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();
-        planet.GetComponentInChildren<CostButtonManager>().UpdateCosts();
-        planet.GetComponentInChildren<EffectButtonManager>().UpdateEffects();
-        planet.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
+        // planet.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();
+        // planet.GetComponentInChildren<CostButtonManager>().UpdateCosts();
+        // planet.GetComponentInChildren<EffectButtonManager>().UpdateEffects();
+        // planet.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
     }
 
     public void ChangeCapitalBuilding(Building building)

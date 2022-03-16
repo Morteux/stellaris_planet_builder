@@ -100,7 +100,7 @@ public class PlanetBarManager : MonoBehaviour
         int i = 0;
         foreach (string building in planetFileDataLines[1].Split(':')[1].Split(','))
         {
-            if(building != "")
+            if (building != "")
                 buildings[i] = Building._buildings_[building];
             ++i;
         }
@@ -109,7 +109,7 @@ public class PlanetBarManager : MonoBehaviour
         // Districs
         Dictionary<string, int> districts = new Dictionary<string, int>();
         foreach (string district in planetFileDataLines[2].Split(':')[1].Split(','))
-            if(district != "")
+            if (district != "")
             {
                 string[] keyValuePair = district.Split('=');
                 int.TryParse(keyValuePair[1], out int districtValue);
@@ -120,35 +120,38 @@ public class PlanetBarManager : MonoBehaviour
         // Custom jobs
         Dictionary<Job, int> customizeJobs = new Dictionary<Job, int>();
         foreach (string customizeJob in planetFileDataLines[3].Split(':')[1].Split(','))
-            if(customizeJob != "")
+            if (customizeJob != "")
             {
                 string[] keyValuePair = customizeJob.Split('=');
                 int.TryParse(keyValuePair[1], out int customizeJobsValue);
                 customizeJobs.Add(Job._jobs_[keyValuePair[0]], customizeJobsValue);
             }
         planetData.customizeJobs_ = customizeJobs;
+        planetData.transform.GetComponentInChildren<CustomizeButtonManager>().LoadJobs(planetData.customizeJobs_);
 
         // Custom resources
         Dictionary<Data.Resource, int> customizeResources = new Dictionary<Data.Resource, int>();
-        foreach (string customizeJob in planetFileDataLines[3].Split(':')[1].Split(','))
-            if(customizeJob != "")
+        foreach (string customizeJob in planetFileDataLines[4].Split(':')[1].Split(','))
+            if (customizeJob != "")
             {
                 string[] keyValuePair = customizeJob.Split('=');
                 int.TryParse(keyValuePair[1], out int customizeResourcesValue);
                 customizeResources.Add(Data.String_to_Resource(keyValuePair[0]), customizeResourcesValue);
             }
         planetData.customizeResources_ = customizeResources;
+        planetData.transform.GetComponentInChildren<CustomizeButtonManager>().LoadValues(planetData.customizeResources_);
 
         // Percentage resources
         Dictionary<Data.Resource, float> percentageResources = new Dictionary<Data.Resource, float>();
-        foreach (string customizeJob in planetFileDataLines[3].Split(':')[1].Split(','))
-            if(customizeJob != "")
+        foreach (string customizeJob in planetFileDataLines[5].Split(':')[1].Split(','))
+            if (customizeJob != "")
             {
                 string[] keyValuePair = customizeJob.Split('=');
-                float.TryParse(keyValuePair[1], out float percentageResourcesValue);
+                float.TryParse(keyValuePair[1].Replace(".", ","), out float percentageResourcesValue);
                 percentageResources.Add(Data.String_to_Resource(keyValuePair[0]), percentageResourcesValue);
             }
         planetData.percentageResources_ = percentageResources;
+        planetData.transform.GetComponentInChildren<CustomizeButtonManager>().LoadPercentage(planetData.percentageResources_);
 
         // Planet size
         int.TryParse(planetFileDataLines[6].Split(':')[1], out int planetSize);
@@ -159,8 +162,16 @@ public class PlanetBarManager : MonoBehaviour
         planetData.transform.GetComponentInChildren<PlanetTypeButtonManager>().LoadPlanetType(planetData.planetType_);
 
         // Government
-        planetData.government_ = planetFileDataLines[8].Split(':')[1];
-        planetData.transform.GetComponentInChildren<GovernmentButtonManager>().LoadGovernment(planetData.government_);
+        string government = planetFileDataLines[8].Split(':')[1];
+        if (government != "")
+        {
+            planetData.government_ = government;
+            planetData.transform.GetComponentInChildren<GovernmentButtonManager>().LoadGovernment(planetData.government_);
+        }
+
+        // Notes
+        for(i = 9; i < planetFileDataLines.Length; ++i)
+            planetData.transform.Find("Panel/ButtonPanels/NotesPanel/InputField").GetComponent<InputField>().text += planetFileDataLines[i] + "\n";
 
         // Update all planet information
         planetData.transform.GetComponentInChildren<BuildManager>().UpdateBuildingButtons();
@@ -170,12 +181,11 @@ public class PlanetBarManager : MonoBehaviour
 
         planetData.transform.GetComponentInChildren<SlotsManager>().LoadBuildings(planetData.buildings_);
 
-        planetData.UpdatePlanetData();
+        planetData.transform.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();
+        planetData.transform.GetComponentInChildren<CostButtonManager>().UpdateCosts();
+        planetData.transform.GetComponentInChildren<EffectButtonManager>().UpdateEffects();
+        planetData.transform.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
 
-        // All called in LoadBuildings
-        // planetData.transform.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();
-        // planetData.transform.GetComponentInChildren<CostButtonManager>().UpdateCosts();
-        // planetData.transform.GetComponentInChildren<EffectButtonManager>().UpdateEffects();
-        // planetData.transform.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
+        planetData.UpdatePlanetData();
     }
 }

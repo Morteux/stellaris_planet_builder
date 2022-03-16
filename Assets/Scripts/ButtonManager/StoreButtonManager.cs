@@ -42,7 +42,7 @@ public class StoreButtonManager : MonoBehaviour
         int i = 0;
         while (i < planets.childCount && firstActivePlanet == null)
         {
-            if (planets.GetChild(i).gameObject.activeSelf == true)
+            if (planets.GetChild(i).parent == planets && planets.GetChild(i).Find("Panel").gameObject.activeSelf == true)
                 firstActivePlanet = planets.GetChild(i);
             ++i;
         }
@@ -85,7 +85,7 @@ public class StoreButtonManager : MonoBehaviour
         fileData += "CustomPercentage:";
         foreach (KeyValuePair<Data.Resource, float> resource in planetData.percentageResources_)
             if(resource.Value != 0.0f)
-            fileData += resource.Key + "=" + resource.Value + ",";
+            fileData += resource.Key + "=" + resource.Value.ToString().Replace(",", ".") + ",";
         fileData += "\n";
 
         // Planet size
@@ -97,8 +97,11 @@ public class StoreButtonManager : MonoBehaviour
         // Government
         fileData += "Government:" + planetData.government_ + "\n";
 
+        // Store notes
+        fileData += planetData.transform.Find("Panel/ButtonPanels/NotesPanel/InputField").GetComponent<InputField>().text;
+
         // Create or overwrite planetName_.txt file
-        File.WriteAllText(storePanel_.Find("InputField").GetComponent<InputField>().text + "\\" + planetData.planetName_.GetComponent<Text>().text + ".txt", fileData);
+        File.WriteAllText(storePanel_.Find("InputField").GetComponent<InputField>().text + "\\" + planetData.planetName_.GetComponent<Text>().text + ".spbs", fileData);
 
         ShowPanel();
     }
