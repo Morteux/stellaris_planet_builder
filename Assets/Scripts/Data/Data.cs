@@ -259,7 +259,6 @@ public class Data {
             {
                 if( field.Length > 0 )
                 {
-                    // Debug.Log("field: " + field);
                     string[] subfields = field.Substring(1, field.Length - 2).Split(',');  // Remove brackets
                     
                     int.TryParse(subfields[1], out int index);
@@ -269,16 +268,13 @@ public class Data {
             }
 
             // Initialize produces
-            // Debug.Log("lineArray[3]: " + lineArray[3]);
             string dictionaryString = lineArray[3].Substring(1, lineArray[3].Length - 2);  // Remove square brackets
             
-            // Debug.Log("dictionaryString: " + dictionaryString);
             if( dictionaryString.Length > 0 )
                 foreach(string field in Regex.Split(dictionaryString, @"(?<=}),(?={)"))
                 {
                     if( field.Length > 0 )
                     {
-                        // Debug.Log("field: " + field);
                         string[] subfields = field.Substring(1, field.Length - 2).Split(',');  // Remove brackets
                         
                         int.TryParse(subfields[1], out int index);
@@ -288,16 +284,13 @@ public class Data {
                 }
             
             // Initialize upkeep
-            // Debug.Log("lineArray[4]: " + lineArray[4]);
             dictionaryString = lineArray[4].Substring(1, lineArray[4].Length - 2);  // Remove square brackets
 
-            // Debug.Log("dictionaryString: " + dictionaryString);
             if( dictionaryString.Length > 0 )
                 foreach(string field in Regex.Split(dictionaryString, @"(?<=}),(?={)"))
                 {
                     if( field.Length > 0 )
                     {
-                        // Debug.Log(field);
                         string[] subfields = field.Substring(1, field.Length - 2).Split(',');  // Remove brackets
                         
                         int.TryParse(subfields[1], out int index);
@@ -349,11 +342,6 @@ public class Data {
         foreach(string line in buildingsFile.text.Split('\n'))
         {
             string[] lineArray = Regex.Split(line, "\\s+");
-            
-            // string lineString = "";
-            // foreach(string field in lineArray)
-            //     lineString += field + " ";
-            // Debug.Log(lineString);
 
             string name = lineArray[0];
             Dictionary<Data.Effects, int> effects = new Dictionary<Effects, int>();
@@ -371,37 +359,29 @@ public class Data {
             string description = "Example description...";
             
             // Initialize effects
-            // Debug.Log("lineArray[1]: " + lineArray[1]);
             string dictionaryString = lineArray[1].Substring(1, lineArray[1].Length - 2);  // Remove square brackets
             
-            // Debug.Log("dictionaryString: " + dictionaryString);
             if( dictionaryString.Length > 0 )
                 foreach(string field in Regex.Split(dictionaryString, @"(?<=}),(?={)"))
                 {
                     if( field.Length > 0 )
                     {
-                        // Debug.Log("field: " + field);
                         string[] subfields = field.Substring(1, field.Length - 2).Split(',');  // Remove brackets
                         
-                        // Debug.Log(subfields[1]);
                         int.TryParse(subfields[1], out int index);
 
-                        // Debug.Log(subfields[0]);
                         effects.Add(String_to_Effects(subfields[0]), index);
                     }
                 }
             
             // Initialize produces
-            // Debug.Log("lineArray[2]: " + lineArray[2]);
             dictionaryString = lineArray[2].Substring(1, lineArray[2].Length - 2);  // Remove square brackets
             
-            // Debug.Log("dictionaryString: " + dictionaryString);
             if( dictionaryString.Length > 0 )
                 foreach(string field in Regex.Split(dictionaryString, @"(?<=}),(?={)"))
                 {
                     if( field.Length > 0 )
                     {
-                        // Debug.Log("field: " + field);
                         string[] subfields = field.Substring(1, field.Length - 2).Split(',');  // Remove brackets
                         
                         int.TryParse(subfields[1], out int index);
@@ -411,21 +391,17 @@ public class Data {
                 }
             
             // Initialize jobs
-            // Debug.Log("lineArray[3]: " + lineArray[3]);
             dictionaryString = lineArray[3].Substring(1, lineArray[3].Length - 2);  // Remove square brackets
             
-            // Debug.Log("dictionaryString: " + dictionaryString);
             if( dictionaryString.Length > 0 )
                 foreach(string field in Regex.Split(dictionaryString, @"(?<=}),(?={)"))
                 {
                     if( field.Length > 0 )
                     {
-                        // Debug.Log("field: " + field);
                         string[] subfields = field.Substring(1, field.Length - 2).Split(',');  // Remove brackets
                         
                         int.TryParse(subfields[1], out int index);
 
-                        // jobs.Add(String_to_Jobs(subfields[0]), index);
                         try{
                             jobs.Add(Job._jobs_[subfields[0]], index);
                         }
@@ -436,16 +412,13 @@ public class Data {
                 }
             
             // Initialize upkeep
-            // Debug.Log("lineArray[4]: " + lineArray[4]);
             dictionaryString = lineArray[4].Substring(1, lineArray[4].Length - 2);  // Remove square brackets
             
-            // Debug.Log("dictionaryString: " + dictionaryString);
             if( dictionaryString.Length > 0 )
                 foreach(string field in Regex.Split(dictionaryString, @"(?<=}),(?={)"))
                 {
                     if( field.Length > 0 )
                     {
-                        // Debug.Log("field: " + field);
                         string[] subfields = field.Substring(1, field.Length - 2).Split(',');  // Remove brackets
                         
                         int.TryParse(subfields[1], out int index);
@@ -458,16 +431,13 @@ public class Data {
             int.TryParse(lineArray[5], out time);
             
             // Initialize cost
-            // Debug.Log("lineArray[6]: " + lineArray[6]);
             dictionaryString = lineArray[6].Substring(1, lineArray[6].Length - 2);  // Remove square brackets
             
-            // Debug.Log("dictionaryString: " + dictionaryString);
             if( dictionaryString.Length > 0 )
                 foreach(string field in Regex.Split(dictionaryString, @"(?<=}),(?={)"))
                 {
                     if( field.Length > 0 )
                     {
-                        // Debug.Log("field: " + field);
                         string[] subfields = field.Substring(1, field.Length - 2).Split(',');  // Remove brackets
                         
                         int.TryParse(subfields[1], out int index);
@@ -478,33 +448,21 @@ public class Data {
 
             // Initialize upgrade
             upgrade = lineArray[7];
-            // Debug.Log("upgrade: " + upgrade);
 
             // Initialize downgrade
             downgrade = lineArray[8];
-            // Debug.Log("downgrade: " + downgrade);
 
             // Initialize buildable
             buildable = lineArray[9];
-            // Debug.Log("buildable: " + buildable);
 
             // Initialize unique
             unique = lineArray[10];
-            // Debug.Log("unique: " + unique);
 
             // Initialize requirements
             string arrayString = lineArray[11].Substring(1, lineArray[11].Length - 2);  // Remove square brackets
             
-            // Debug.Log("arrayString: " + arrayString);
             if( arrayString.Length > 0 )
                 requirements = Regex.Split(arrayString, @"(?<=}),(?={)");
-
-                
-            
-            // string lineString = "";
-            // foreach(string field in requirements)
-            //     lineString += field + " ";
-            // Debug.Log("lineString: " + lineString);
 
             Building._buildings_.Add(name, new Building(name, effects, produces, jobs, upkeep, time, cost, upgrade, downgrade, buildable, unique, requirements, description));
         }
@@ -556,16 +514,13 @@ public class Data {
             string color = "";
             
             // Initialize production
-            // Debug.Log("lineArray[1]: " + lineArray[1]);
             string dictionaryString = lineArray[1].Substring(1, lineArray[1].Length - 2);  // Remove square brackets
             
-            // Debug.Log("dictionaryString: " + dictionaryString);
             if( dictionaryString.Length > 0 )
                 foreach(string field in Regex.Split(dictionaryString, @"(?<=}),(?={)"))
                 {
                     if( field.Length > 0 )
                     {
-                        // Debug.Log("field: " + field);
                         string[] subfields = field.Substring(1, field.Length - 2).Split(',');  // Remove brackets
                         
                         int.TryParse(subfields[1], out int index);
@@ -575,16 +530,13 @@ public class Data {
                 }
             
             // Initialize jobs
-            // Debug.Log("lineArray[2]: " + lineArray[2]);
             dictionaryString = lineArray[2].Substring(1, lineArray[2].Length - 2);  // Remove square brackets
             
-            // Debug.Log("dictionaryString: " + dictionaryString);
             if( dictionaryString.Length > 0 )
                 foreach(string field in Regex.Split(dictionaryString, @"(?<=}),(?={)"))
                 {
                     if( field.Length > 0 )
                     {
-                        // Debug.Log("field: " + field);
                         string[] subfields = field.Substring(1, field.Length - 2).Split(',');  // Remove brackets
                         
                         int.TryParse(subfields[1], out int index);
@@ -599,16 +551,13 @@ public class Data {
                 }
             
             // Initialize upkeep
-            // Debug.Log("lineArray[3]: " + lineArray[3]);
             dictionaryString = lineArray[3].Substring(1, lineArray[3].Length - 2);  // Remove square brackets
             
-            // Debug.Log("dictionaryString: " + dictionaryString);
             if( dictionaryString.Length > 0 )
                 foreach(string field in Regex.Split(dictionaryString, @"(?<=}),(?={)"))
                 {
                     if( field.Length > 0 )
                     {
-                        // Debug.Log("field: " + field);
                         string[] subfields = field.Substring(1, field.Length - 2).Split(',');  // Remove brackets
                         
                         int.TryParse(subfields[1], out int index);
@@ -620,16 +569,13 @@ public class Data {
             time = int.Parse(lineArray[4]);
             
             // Initialize cost
-            // Debug.Log("lineArray[5]: " + lineArray[5]);
             dictionaryString = lineArray[5].Substring(1, lineArray[5].Length - 2);  // Remove square brackets
             
-            // Debug.Log("dictionaryString: " + dictionaryString);
             if( dictionaryString.Length > 0 )
                 foreach(string field in Regex.Split(dictionaryString, @"(?<=}),(?={)"))
                 {
                     if( field.Length > 0 )
                     {
-                        // Debug.Log("field: " + field);
                         string[] subfields = field.Substring(1, field.Length - 2).Split(',');  // Remove brackets
                         
                         int.TryParse(subfields[1], out int index);
@@ -641,12 +587,8 @@ public class Data {
             // Initialize requirements
             string arrayString = lineArray[6].Substring(1, lineArray[6].Length - 2);  // Remove square brackets
             
-            // Debug.Log("arrayString: " + arrayString);
             if( arrayString.Length > 0 )
                 requirements = Regex.Split(arrayString, @"(?<=}),(?={)");
-                
-            // foreach( string requirement in requirements)
-            //     Debug.Log(requirement);
 
             // Initialize color
             color = lineArray[7];
@@ -697,36 +639,28 @@ public class Data {
             string[] requirements = new string[0];
             
             // Initialize effects
-            // Debug.Log("lineArray[1]: " + lineArray[1]);
             string dictionaryString = lineArray[1].Substring(1, lineArray[1].Length - 2);  // Remove square brackets
             
-            // Debug.Log("dictionaryString: " + dictionaryString);
             if( dictionaryString.Length > 0 )
                 foreach(string field in Regex.Split(dictionaryString, @"(?<=}),(?={)"))
                 {
                     if( field.Length > 0 )
                     {
-                        // Debug.Log("field: " + field);
                         string[] subfields = field.Substring(1, field.Length - 2).Split(',');  // Remove brackets
                         
-                        // Debug.Log(subfields[1]);
                         int.TryParse(subfields[1], out int index);
 
-                        // Debug.Log(subfields[0]);
                         effects.Add(String_to_Effects(subfields[0]), index);
                     }
                 }
             
             // Initialize jobs
-            // Debug.Log("lineArray[2]: " + lineArray[2]);
             dictionaryString = lineArray[2].Substring(1, lineArray[2].Length - 2);  // Remove square brackets
             
-            // Debug.Log("dictionaryString: " + dictionaryString);
             if( dictionaryString.Length > 0 )
                 foreach(string field in Regex.Split(dictionaryString, @"(?<=}),(?={)"))
                     if( field.Length > 0 )
                     {
-                        // Debug.Log("field: " + field);
                         string[] subfields = field.Substring(1, field.Length - 2).Split(',');  // Remove brackets
                         
                         int.TryParse(subfields[1], out int index);
@@ -742,7 +676,6 @@ public class Data {
             // Initialize requirements
             string arrayString = lineArray[3].Substring(1, lineArray[3].Length - 2);  // Remove square brackets
             
-            // Debug.Log("arrayString: " + arrayString);
             if( arrayString.Length > 0 )
                 requirements = Regex.Split(arrayString, @"(?<=}),(?={)");
 
@@ -750,5 +683,55 @@ public class Data {
         }
 
         Debug.Log("Planets loaded: " + Planet._planets_.Count);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    // loadGovernments
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void loadGovernments()
+    {
+        TextAsset governmentFile = Resources.Load<TextAsset>("Data/" + _version_ + "/Governments"); // read Government.txt from Resource folder
+        Government._governments_ = new Dictionary<string, Government>();
+
+        foreach(string line in governmentFile.text.Split('\n'))
+        {
+            string[] lineArray = Regex.Split(line, "\\s+");
+
+            string name = lineArray[0];
+            string capitalBuilding = lineArray[1];
+            string[] requirements = new string[0];
+            
+            // Initialize requirements
+            string arrayString = lineArray[2].Substring(1, lineArray[2].Length - 2);  // Remove square brackets
+            
+            if( arrayString.Length > 0 )
+                requirements = Regex.Split(arrayString, @"(?<=}),(?={)");
+
+            Government._governments_.Add(name, new Government(name, capitalBuilding, requirements));
+        }
+
+        Debug.Log("Governments loaded: " + Government._governments_.Count);
     }
 }

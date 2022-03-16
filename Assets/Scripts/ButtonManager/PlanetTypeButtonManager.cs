@@ -19,14 +19,13 @@ public class PlanetTypeButtonManager : MonoBehaviour
         planetTypeContent_ = planetTypePanel_.transform.Find("Scroll View/Viewport/Content");
         planetData_ = transform.parent.parent.parent.parent.parent.GetComponent<PlanetData>();
 
-        // Instantiate Planets
-        foreach (KeyValuePair<string, Planet> pair in Planet._planets_)
+        // Instantiate planets
+        foreach (KeyValuePair<string, Planet> planet in Planet._planets_)
         {
-            // Debug.Log(pair);
             GameObject NewSelectableItemButtonPrefab = Instantiate(selectableItemButtonPrefab_, planetTypeContent_.position, planetTypeContent_.rotation, planetTypeContent_);
             NewSelectableItemButtonPrefab.GetComponent<Button>().onClick.AddListener(ChangePlanetType);
-            NewSelectableItemButtonPrefab.GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Planets/" + pair.Key);
-            NewSelectableItemButtonPrefab.transform.Find("Text").GetComponent<Text>().text = pair.Key.Replace('_', ' ');
+            NewSelectableItemButtonPrefab.GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Planets/" + planet.Key);
+            NewSelectableItemButtonPrefab.transform.Find("Text").GetComponent<Text>().text = planet.Key.Replace('_', ' ');
             NewSelectableItemButtonPrefab.transform.Find("SelectedFrame").gameObject.SetActive(false);
         }
 
@@ -50,7 +49,7 @@ public class PlanetTypeButtonManager : MonoBehaviour
         if (planetTypeContent_.childCount > 0)
             foreach (Transform child in planetTypeContent_)
                 child.Find("SelectedFrame").gameObject.SetActive(false);
-        
+
         button.transform.Find("SelectedFrame").gameObject.SetActive(true);
 
         // Save new planet type
@@ -58,7 +57,7 @@ public class PlanetTypeButtonManager : MonoBehaviour
 
         // Cast from string[] requirements to HashSet<string> requirements
         planetData_.planetTypeRequirement_ = new HashSet<string>();
-        foreach(string requirement in Planet._planets_[planetType].requirements_)
+        foreach (string requirement in Planet._planets_[planetType].requirements_)
             planetData_.planetTypeRequirement_.Add(requirement);
 
         planetData_.planetTypeEffects_ = Planet._planets_[planetType].effects_;
@@ -73,5 +72,31 @@ public class PlanetTypeButtonManager : MonoBehaviour
         planetData_.transform.GetComponentInChildren<EffectButtonManager>().UpdateEffects();
     }
 
-    /////////////////////////////////////// HACER LOS REQUISITOS PLANETARIOS
+    public void LoadPlanetType(string planetType)
+    {
+        Transform planetTypeButton = null;
+
+        // Store planet type button gameobject
+        foreach (Transform child in planetTypeContent_)
+            if (child.parent == planetTypeContent_ && child.Find("Text").GetComponent<Text>().text == planetType.Replace("_", " "))
+                planetTypeButton = child;
+
+        GameObject button = planetTypeButton.gameObject;
+
+        // Set active false all planet types SelectedFrame
+        if (planetTypeContent_.childCount > 0)
+            foreach (Transform child in planetTypeContent_)
+                child.Find("SelectedFrame").gameObject.SetActive(false);
+
+        button.transform.Find("SelectedFrame").gameObject.SetActive(true);
+
+        // Cast from string[] requirements to HashSet<string> requirements
+        planetData_.planetTypeRequirement_ = new HashSet<string>();
+        foreach (string requirement in Planet._planets_[planetType].requirements_)
+            planetData_.planetTypeRequirement_.Add(requirement);
+
+        planetData_.planetTypeEffects_ = Planet._planets_[planetType].effects_;
+        planetData_.planetType_ = planetType;
+        planetData_.transform.GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Planets/" + planetType);
+    }
 }

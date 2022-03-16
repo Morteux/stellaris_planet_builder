@@ -10,7 +10,7 @@ public class VersionButtonManager : MonoBehaviour
 
     private void Awake()
     {
-        versionPanel_ = transform.parent.Find("VersionPanel");
+        versionPanel_ = transform.parent.parent.Find("Panels/VersionPanel");
         versionPanel_.gameObject.SetActive(false);
     }
 
@@ -22,14 +22,14 @@ public class VersionButtonManager : MonoBehaviour
         versionPanel_.Find("Reject").GetComponent<Button>().onClick.AddListener(HidePanel);
     }
 
-    void ShowPanel()
-    {
-        versionPanel_.gameObject.SetActive(!versionPanel_.gameObject.activeSelf);
-    }
-
     void ChangeScene()
     {
         SceneManager.LoadScene("VersionSelection", LoadSceneMode.Single);
+    }
+
+    void ShowPanel()
+    {
+        versionPanel_.gameObject.SetActive(!versionPanel_.gameObject.activeSelf);
     }
 
     void HidePanel()

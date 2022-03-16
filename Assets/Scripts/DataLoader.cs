@@ -23,6 +23,9 @@ public class DataLoader : MonoBehaviour
         // Debug.Log("Started Data.loadPlanets()");
         Data.loadPlanets();
         // Debug.Log("Ended Data.loadPlanets()");
+        // Debug.Log("Started Data.loadGovernments()");
+        Data.loadGovernments();
+        // Debug.Log("Ended Data.loadGovernments()");
 
         PlanetBar.SetActive(true);
     }

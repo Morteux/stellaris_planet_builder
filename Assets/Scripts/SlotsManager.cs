@@ -60,6 +60,9 @@ public class SlotsManager : MonoBehaviour
         {
             childsSlotsUpgrade[i] = SlotsUpgrade.transform.GetChild(i);
             childsSlotsUpgrade[i].GetComponent<Button>().onClick.AddListener(UpgradeBuilding);
+
+            // Adjust clickable button area to actual image area
+            childsSlotsUpgrade[i].GetComponent<Image>().alphaHitTestMinimumThreshold = 0.1f;
         }
 
         SlotsDowngrade = transform.Find("SlotsDowngrade").gameObject;
@@ -70,6 +73,9 @@ public class SlotsManager : MonoBehaviour
         {
             childsSlotsDowngrade[i] = SlotsDowngrade.transform.GetChild(i);
             childsSlotsDowngrade[i].GetComponent<Button>().onClick.AddListener(DowngradeBuilding);
+
+            // Adjust clickable button area to actual image area
+            childsSlotsDowngrade[i].GetComponent<Image>().alphaHitTestMinimumThreshold = 0.1f;
         }
 
         RemoveButton.GetComponent<Button>().onClick.AddListener(RemoveBuilding);
@@ -97,6 +103,42 @@ public class SlotsManager : MonoBehaviour
 
             lastFreeSlot++;
         }
+
+        UpdatePlanetBuildings();
+        planet.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();
+        planet.GetComponentInChildren<CostButtonManager>().UpdateCosts();
+        planet.GetComponentInChildren<EffectButtonManager>().UpdateEffects();
+        planet.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
+    }
+
+    public void LoadBuildings(Building[] buildings)
+    {
+        // Change capital building too
+        lastFreeSlot = 0;
+
+        foreach (Building building in buildings)
+            if (building != null && lastFreeSlot < Slots.transform.childCount)
+            {
+                childsSlots[lastFreeSlot].GetComponent<Button>().interactable = true;
+                childsSlots[lastFreeSlot].GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Buildings/" + building.name_);
+
+                if (building.unique_ == "Yes")
+                    childsSlotsBackground[lastFreeSlot].GetComponent<Image>().color = new Color32(22, 161, 231, 255);
+
+                if (building.upgrade_ != "-")
+                    childsSlotsUpgrade[lastFreeSlot].gameObject.SetActive(true);
+                else
+                    childsSlotsUpgrade[lastFreeSlot].gameObject.SetActive(false);
+
+                if (building.downgrade_ != "-")
+                    childsSlotsDowngrade[lastFreeSlot].gameObject.SetActive(true);
+                else
+                    childsSlotsDowngrade[lastFreeSlot].gameObject.SetActive(false);
+
+                slotsBuildings[lastFreeSlot] = building;
+
+                lastFreeSlot++;
+            }
 
         UpdatePlanetBuildings();
         planet.GetComponentInChildren<RequirementButtonManager>().UpdateRequirements();

@@ -12,6 +12,7 @@ public class DistrictManager : MonoBehaviour
     private Transform districtContent_;
     private Transform planetSizeSlider_;
     private int districtNum_;
+    private bool isSliderCallback;
 
     // District names in order
     List<string> districtNames_;
@@ -25,6 +26,9 @@ public class DistrictManager : MonoBehaviour
         planet_ = transform.parent.parent;
         planetData_ = planet_.GetComponent<PlanetData>();
         districtContent_ = transform.Find("Scroll View/Viewport/Content");
+
+        // Flag for slider onValueChanged listener
+        isSliderCallback = true;
 
         // Initialize districtNum by default
         districtNum_ = 5;
@@ -79,6 +83,55 @@ public class DistrictManager : MonoBehaviour
         }
     }
 
+    public void LoadDistrictSlots(Dictionary<string, int> districts, int planetSize)
+    {
+        // Remove all BuildingButtonPrefab instantiated before
+        if (districtContent_.childCount > 0)
+            foreach (Transform child in districtContent_)
+                GameObject.Destroy(child.gameObject);
+
+        districtNames_ = new List<string>();
+
+        // Load PlanetName districts
+        foreach (KeyValuePair<string, int> district in planetData_.district_)
+            districtNames_.Add(district.Key);
+
+        districtNum_ = districtNames_.Count;
+
+        // Initialize district transforms
+        districtTransform_ = new List<Transform>();
+        foreach (string districtName in districtNames_)
+        {
+            // Instantiate new district slot
+            GameObject NewDistrictSlotPrefab = Instantiate(districtSlotPrefab, districtContent_.position, districtContent_.rotation, districtContent_);
+            NewDistrictSlotPrefab.GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Districts/" + districtName);
+            NewDistrictSlotPrefab.transform.Find("SelectedDistrictSlot").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Districts/Colors/" + District._districts_[districtName].color_ + "_Selected");
+            NewDistrictSlotPrefab.transform.Find("UnselectedDistrictSlot").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Districts/Colors/" + District._districts_[districtName].color_ + "_Unselected");
+
+            districtTransform_.Add(NewDistrictSlotPrefab.transform);
+        }
+
+        // Update districts counter
+        int i = 0;
+        foreach (KeyValuePair<string, int> district in planetData_.district_)
+        {
+            districtTransform_[i].Find("SelectedDistrictSlot/Counter").GetComponent<Text>().text = district.Value.ToString();
+            ++i;
+        }
+
+        // Update district button listeners
+        SetDistrictButtonListeners();
+
+        // Update actual planetSize stored
+        isSliderCallback = false;
+        
+        planetSizeSlider_.parent.Find("Counter").GetComponent<Text>().text = planetSize.ToString();
+        planetSizeSlider_.GetComponent<Slider>().value = planetSize;
+        UpdateDistrictsSlot();
+
+        isSliderCallback = true;
+    }
+
     // Set district buttons listeners
     void SetDistrictButtonListeners()
     {
@@ -96,11 +149,14 @@ public class DistrictManager : MonoBehaviour
     {
         // Debug.Log("UpdateDistrictsSize");
 
-        planetSizeSlider_.parent.Find("Counter").GetComponent<Text>().text = ((int)newPlanetSize).ToString();
+        if (isSliderCallback)
+        {
+            planetSizeSlider_.parent.Find("Counter").GetComponent<Text>().text = ((int)newPlanetSize).ToString();
 
-        planetData_.planetSize_ = (int)newPlanetSize;
+            planetData_.planetSize_ = (int)newPlanetSize;
 
-        UpdateDistrictsSlot();
+            UpdateDistrictsSlot();
+        }
     }
 
     // Increment or decrement districtName build in this planet
@@ -109,8 +165,6 @@ public class DistrictManager : MonoBehaviour
     void ChangeDistrictCounter(Transform district, string districtName, int mode)
     {
         // Debug.Log("ChangeDistrictCounter");
-        // Debug.Log(district);
-        // Debug.Log(districtName);
 
         int selected = int.Parse(district.Find("SelectedDistrictSlot/Counter").GetComponent<Text>().text);
         int unselected = int.Parse(district.Find("UnselectedDistrictSlot/Counter").GetComponent<Text>().text);
@@ -130,7 +184,6 @@ public class DistrictManager : MonoBehaviour
                 UpdateDistrictsSlot();
 
                 planetData_.UpdatePlanetData();
-                // Planet.GetComponentInChildren<PlanetData>().UpdatePlanetData();
                 planet_.GetComponentInChildren<CostButtonManager>().UpdateCosts();
                 planet_.GetComponentInChildren<JobsButtonManager>().UpdateJobs();
             }
@@ -149,7 +202,6 @@ public class DistrictManager : MonoBehaviour
         }
 
         // Update UnavailableDistrictSlot counter
-
         planetSizeSlider_.GetComponent<Slider>().minValue = totalSelectedDistrict;
 
         for (int i = 0; i < districtNum_; ++i)
@@ -182,7 +234,7 @@ public class DistrictManager : MonoBehaviour
     // Change district type by government and planet type
     public void UpdateDistrictType()
     {
-        Debug.Log("ChangeDistrictType");
+        // Debug.Log("ChangeDistrictType");
 
         // Set new districts
         districtNames_ = new List<string>();
@@ -264,13 +316,13 @@ public class DistrictManager : MonoBehaviour
     void CheckRequirementsAndAddDistrictName(string districtName)
     {
         // Debug.Log("CheckRequirementsAndAddDistrictName");
-        Debug.Log(districtName);
+        // Debug.Log(districtName);
         bool check = true;
 
         // Check if actually meets all the requirements
         foreach (string requirement in District._districts_[districtName].requirements_)
         {
-            Debug.Log(requirement);
+            // Debug.Log(requirement);
 
             string negativeRequirement = "";
 
@@ -286,7 +338,7 @@ public class DistrictManager : MonoBehaviour
             if (planetData_.planetTypeRequirement_.Contains(negativeRequirement))
                 check = false;
 
-            Debug.Log(check);
+            // Debug.Log(check);
         }
 
         if (check)

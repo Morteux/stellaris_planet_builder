@@ -28,7 +28,12 @@ public class PlanetData : MonoBehaviour
     [System.NonSerialized] public HashSet<string> requirements_;
     [System.NonSerialized] public Transform planetName_;
     [System.NonSerialized] public Transform planetNameInputField_;
+    [System.NonSerialized] public bool isInitialized_;
     private OutputManager outputManager;
+
+    private void Awake() {
+        isInitialized_ = false;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +68,8 @@ public class PlanetData : MonoBehaviour
         planetName_ = transform.Find("PlanetName");
         planetNameInputField_ = transform.Find("Panel/PlanetNameInputField");
         planetNameInputField_.GetComponent<InputField>().onValueChanged.AddListener(delegate { ChangePlanetName(); });
+        
+        isInitialized_ = true;
     }
 
     public void UpdatePlanetData()
