@@ -25,6 +25,7 @@ public class EthicsButtonManager : MonoBehaviour
     void ShowEthicsPanel()
     {
         // Debug.Log("ShowEthicssPanel");
+        
         EthicsPanel.gameObject.SetActive(!EthicsPanel.gameObject.activeSelf);
     }
 }

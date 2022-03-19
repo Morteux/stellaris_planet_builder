@@ -10,6 +10,7 @@ public class VersionSelectionManager : MonoBehaviour
     public GameObject VersionButtonPrefab;
     [System.NonSerialized] public GameObject SelectedVersion;
     private string version;
+    private string customPath_;
     private int versionButtonCount;
     private Transform loadingScreen;
     private Transform progressBar;
@@ -47,7 +48,7 @@ public class VersionSelectionManager : MonoBehaviour
             NewVersionButtonPrefab.transform.Find("Description").GetComponent<Text>().text = "Release: " + lineArray[3] + ". " + lineArray[5];
             NewVersionButtonPrefab.transform.Find("Wiki").GetComponent<Button>().onClick.AddListener(delegate { OpenWikiURL(lineArray[2]); });
 
-            if(lineArray[1] == "No")
+            if (lineArray[1] == "No")
                 NewVersionButtonPrefab.GetComponent<Button>().interactable = false;
 
             ++versionButtonCount;
@@ -73,17 +74,27 @@ public class VersionSelectionManager : MonoBehaviour
     }
 
     // Store version value in this button
-    void SelectVersion()
+    public void SelectVersion()
     {
         version = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.Find("Version").GetComponent<Text>().text;
         transform.parent.Find("Accept").GetChild(0).GetComponent<Text>().text = "Load: " + version;
     }
 
+    // Store version value in this button
+    public void SelectCustomVersion()
+    {
+        Data._isCustomVersion_ = true;
+        customPath_ = Application.persistentDataPath + "/Custom/" + UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.Find("Version").GetComponent<Text>().text;
+        transform.parent.Find("Accept").GetChild(0).GetComponent<Text>().text = "Load: " + version;
+    }
+
     void AcceptButton()
     {
-        Data._version_ = version;
-        // PlayerPrefs.SetString("version", version);
-        // SceneManager.LoadScene("PlanetView", LoadSceneMode.Single);
+        if (!Data._isCustomVersion_)
+            Data._version_ = version;
+        else
+            Data._customPath_ = customPath_;
+
         loadingScreen.gameObject.SetActive(true);
 
         loadingScreen.GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/LoadingScreens/" + Random.Range(0, 17));
