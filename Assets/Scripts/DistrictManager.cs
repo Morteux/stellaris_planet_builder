@@ -6,13 +6,13 @@ using System;
 
 public class DistrictManager : MonoBehaviour
 {
-    public GameObject districtSlotPrefab;
+    public GameObject districtSlotPrefab_;
     private PlanetData planetData_;
     private Transform planet_;
     private Transform districtContent_;
     private Transform planetSizeSlider_;
     private int districtNum_;
-    private bool isSliderCallback;
+    private bool isSliderCallback_;
 
     // District names in order
     List<string> districtNames_;
@@ -20,7 +20,6 @@ public class DistrictManager : MonoBehaviour
     // District transforms in order
     List<Transform> districtTransform_;
 
-    // Start is called before the first frame update
     void Start()
     {
         planet_ = transform.parent.parent;
@@ -28,7 +27,7 @@ public class DistrictManager : MonoBehaviour
         districtContent_ = transform.Find("Scroll View/Viewport/Content");
 
         // Flag for slider onValueChanged listener
-        isSliderCallback = true;
+        isSliderCallback_ = true;
 
         // Initialize districtNum by default
         districtNum_ = 5;
@@ -74,7 +73,7 @@ public class DistrictManager : MonoBehaviour
         foreach (string districtName in districtNames_)
         {
             // Instantiate new district slot
-            GameObject NewDistrictSlotPrefab = Instantiate(districtSlotPrefab, districtContent_.position, districtContent_.rotation, districtContent_);
+            GameObject NewDistrictSlotPrefab = Instantiate(districtSlotPrefab_, districtContent_.position, districtContent_.rotation, districtContent_);
             NewDistrictSlotPrefab.GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Districts/" + districtName);
             NewDistrictSlotPrefab.transform.Find("SelectedDistrictSlot").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Districts/Colors/" + District._districts_[districtName].color_ + "_Selected");
             NewDistrictSlotPrefab.transform.Find("UnselectedDistrictSlot").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Districts/Colors/" + District._districts_[districtName].color_ + "_Unselected");
@@ -103,7 +102,7 @@ public class DistrictManager : MonoBehaviour
         foreach (string districtName in districtNames_)
         {
             // Instantiate new district slot
-            GameObject NewDistrictSlotPrefab = Instantiate(districtSlotPrefab, districtContent_.position, districtContent_.rotation, districtContent_);
+            GameObject NewDistrictSlotPrefab = Instantiate(districtSlotPrefab_, districtContent_.position, districtContent_.rotation, districtContent_);
             NewDistrictSlotPrefab.GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Districts/" + districtName);
             NewDistrictSlotPrefab.transform.Find("SelectedDistrictSlot").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Districts/Colors/" + District._districts_[districtName].color_ + "_Selected");
             NewDistrictSlotPrefab.transform.Find("UnselectedDistrictSlot").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Districts/Colors/" + District._districts_[districtName].color_ + "_Unselected");
@@ -123,13 +122,13 @@ public class DistrictManager : MonoBehaviour
         SetDistrictButtonListeners();
 
         // Update actual planetSize stored
-        isSliderCallback = false;
+        isSliderCallback_ = false;
         
         planetSizeSlider_.parent.Find("Counter").GetComponent<Text>().text = planetSize.ToString();
         planetSizeSlider_.GetComponent<Slider>().value = planetSize;
         UpdateDistrictsSlot();
 
-        isSliderCallback = true;
+        isSliderCallback_ = true;
     }
 
     // Set district buttons listeners
@@ -149,7 +148,7 @@ public class DistrictManager : MonoBehaviour
     {
         // Debug.Log("UpdateDistrictsSize");
 
-        if (isSliderCallback)
+        if (isSliderCallback_)
         {
             planetSizeSlider_.parent.Find("Counter").GetComponent<Text>().text = ((int)newPlanetSize).ToString();
 

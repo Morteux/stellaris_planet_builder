@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EffectButtonManager : MonoBehaviour
 {
-    public GameObject ResourcePrefab;
+    public GameObject resourcePrefab_;
     private PlanetData planetData_;
     private GameObject effectPanel_;
     private Transform effectPanelContent_;
@@ -17,7 +17,6 @@ public class EffectButtonManager : MonoBehaviour
         effectPanel_.SetActive(false);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         planetData_ = transform.parent.parent.parent.parent.parent.GetComponent<PlanetData>();
@@ -44,7 +43,7 @@ public class EffectButtonManager : MonoBehaviour
         foreach (KeyValuePair<Data.Effects, int> pair in planetData_.planetTypeEffects_)
         {
             // Debug.Log(pair);
-            GameObject NewResourcePrefab = Instantiate(ResourcePrefab, effectPanelContent_.position, effectPanelContent_.rotation, effectPanelContent_);
+            GameObject NewResourcePrefab = Instantiate(resourcePrefab_, effectPanelContent_.position, effectPanelContent_.rotation, effectPanelContent_);
             // NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Effects_to_string(pair.Key));
             NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Planets/" + planetData_.planetType_);
             // NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = pair.Value.ToString() + "% \t" + Data.Effects_to_string(pair.Key).Replace('_', ' ');
@@ -54,7 +53,7 @@ public class EffectButtonManager : MonoBehaviour
         foreach (KeyValuePair<Data.Effects, int> pair in planetData_.effects_)
         {
             // Debug.Log(pair);
-            GameObject NewResourcePrefab = Instantiate(ResourcePrefab, effectPanelContent_.position, effectPanelContent_.rotation, effectPanelContent_);
+            GameObject NewResourcePrefab = Instantiate(resourcePrefab_, effectPanelContent_.position, effectPanelContent_.rotation, effectPanelContent_);
             // NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Effects_to_string(pair.Key));
             NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Effects/" + pair.Key.ToString());
             // NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = pair.Value.ToString() + "% \t" + Data.Effects_to_string(pair.Key).Replace('_', ' ');

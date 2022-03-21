@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class BuildingButtonManager : MonoBehaviour
 {
-    [System.NonSerialized] public Building building;
-    private GameObject BuildingsPanel;
+    [System.NonSerialized] public Building building_;
+    private GameObject buildingsPanel_;
 
-    // Start is called before the first frame update
     void Start()
     {
         // Debug.Log("BuildingButtonManager::Start");
-        BuildingsPanel = transform.parent.parent.parent.parent.parent.Find("BuildingsPanel").gameObject;
+        
+        buildingsPanel_ = transform.parent.parent.parent.parent.parent.Find("BuildingsPanel").gameObject;
         transform.Find("Disabled").gameObject.SetActive(false);
 
         GetComponent<Button>().onClick.AddListener(AddBuildingToNextSlot);
@@ -22,16 +22,14 @@ public class BuildingButtonManager : MonoBehaviour
     {
         // Debug.Log("BuildingButtonManager::AddBuildingToNextSlot");
 
-        // Debug.Log(building.name_);
-        SlotsManager slotManager = BuildingsPanel.GetComponent<SlotsManager>();
+        SlotsManager slotManager = buildingsPanel_.GetComponent<SlotsManager>();
 
-        if (slotManager.lastFreeSlot < slotManager.Slots.transform.childCount)
+        if (slotManager.lastFreeSlot_ < slotManager.slots_.transform.childCount)
         {
-            slotManager.AddNewBuilding(building);
+            slotManager.AddNewBuilding(building_);
 
-            if (building.unique_ == "Yes")
+            if (building_.unique_ == "Yes")
             {
-                // Debug.Log("is unique");
                 transform.Find("Disabled").gameObject.SetActive(true);
                 GetComponent<Button>().interactable = false;
             }

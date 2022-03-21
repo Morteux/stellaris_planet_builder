@@ -9,10 +9,7 @@ using UnityEngine.Events;
 
 public class PlanetTabManager : MonoBehaviour, IPointerClickHandler
 {
-
-    [System.NonSerialized] public UnityEvent leftClick;
-    // [System.NonSerialized] public UnityEvent middleClick;
-    [System.NonSerialized] public UnityEvent rightClick;
+    [System.NonSerialized] public UnityEvent leftClick_;
     private GameObject planetPanel_;
     private GameObject planetTypePanel_;
     private string name_ = "1";
@@ -22,52 +19,33 @@ public class PlanetTabManager : MonoBehaviour, IPointerClickHandler
     {
         // Debug.Log("PlanetTabManager::Start");
 
-        // btnPlanet_ = gameObject.GetComponent<Button>();
-        // btnPlanet_.onClick.AddListener(ShowPlanetPanel);
-
         // // Store panel references
-        // panel_ = btnPlanet_.transform.Find("Panel").gameObject;
-        leftClick = new UnityEvent();
-        rightClick = new UnityEvent();
+        leftClick_ = new UnityEvent();
 
-        leftClick.AddListener(ShowPlanetPanel);
-        // rightClick.AddListener(ShowPlanetTypePanel);
+        leftClick_.AddListener(ShowPlanetPanel);
         StartInstantation();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
-            leftClick.Invoke();
-        // else if (eventData.button == PointerEventData.InputButton.Right)
-        //     rightClick.Invoke();
+            leftClick_.Invoke();
     }
 
     void ShowPlanetPanel()
     {
         // Debug.Log("PlanetTabManager::ShowPlanetPanel");
 
-        // transform.parent.parent.GetComponent<PlanetBarManager>().ChangeActivePlanet(panel_);
-
         foreach (Transform child in transform.parent)
             child.GetChild(1).gameObject.SetActive(false);
 
         planetPanel_.SetActive(true);
     }
-
-    // public void ShowPlanetTypePanel()
-    // {
-    //     // Debug.Log("PlanetTabManager::ShowPlanetTypePanel");
-
-    //     planetTypePanel_.SetActive(!planetTypePanel_.activeSelf);
-    // }
-
     public void StartInstantation()
     {
         // Debug.Log("PlanetTabManager::StartInstantation");
 
         btnPlanet_ = gameObject.GetComponent<Button>();
-        // btnPlanet_.onClick.AddListener(ShowPlanetPanel);
 
         // Store panel references
         planetPanel_ = btnPlanet_.transform.Find("Panel").gameObject;

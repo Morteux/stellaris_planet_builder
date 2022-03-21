@@ -3830,7 +3830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422f687206a84db4394749351b06979b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VersionButtonPrefab: {fileID: 1272528506735938939, guid: ea08b38e72b85b641b9fe4396da47874, type: 3}
+  versionButtonPrefab_: {fileID: 1272528506735938939, guid: ea08b38e72b85b641b9fe4396da47874, type: 3}
 --- !u!1 &1555320922
 GameObject:
   m_ObjectHideFlags: 0

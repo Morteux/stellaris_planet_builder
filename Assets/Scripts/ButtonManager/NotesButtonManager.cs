@@ -13,7 +13,6 @@ public class NotesButtonManager : MonoBehaviour
         notesPanel_.gameObject.SetActive(false);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         transform.GetComponent<Button>().onClick.AddListener(ShowNotesPanel);

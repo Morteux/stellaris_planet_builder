@@ -10,7 +10,6 @@ public class GovernmentButtonManager : MonoBehaviour
     private Transform governmentPanel_;
     private Transform governmentContent_;
 
-    // Start is called before the first frame update
     void Start()
     {
         governmentPanel_ = transform.parent.parent.parent.parent.Find("ButtonPanels/GovernmentPanel");

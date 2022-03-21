@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class JobsButtonManager : MonoBehaviour
 {
-    public GameObject ResourcePrefab;
+    public GameObject resourcePrefab_;
     private PlanetData planetData_;
     private GameObject jobsPanel_;
     private Transform jobsPanelContent_;
@@ -17,7 +17,6 @@ public class JobsButtonManager : MonoBehaviour
         jobsPanel_.SetActive(false);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         planetData_ = transform.parent.parent.parent.parent.parent.GetComponent<PlanetData>();
@@ -47,7 +46,7 @@ public class JobsButtonManager : MonoBehaviour
 
             if (pair.Value != 0)
             {
-                GameObject NewResourcePrefab = Instantiate(ResourcePrefab, jobsPanelContent_.position, jobsPanelContent_.rotation, jobsPanelContent_);
+                GameObject NewResourcePrefab = Instantiate(resourcePrefab_, jobsPanelContent_.position, jobsPanelContent_.rotation, jobsPanelContent_);
                 // Debug.Log(Data.Resource_to_string(pair.Key));
                 // NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Resource_to_string(pair.Key));
                 NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Jobs/" + pair.Key.name_);

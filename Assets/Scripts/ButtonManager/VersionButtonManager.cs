@@ -14,7 +14,6 @@ public class VersionButtonManager : MonoBehaviour
         versionPanel_.gameObject.SetActive(false);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         transform.GetComponent<Button>().onClick.AddListener(ShowPanel);

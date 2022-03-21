@@ -5,22 +5,22 @@ using UnityEngine.UI;
 
 public class OutputManager : MonoBehaviour
 {
-    public GameObject ResourcePrefab;
-    [System.NonSerialized] public Transform outcomeContent;
-    [System.NonSerialized] public Transform upkeepContent;
-    [System.NonSerialized] public Transform outputContent;
+    public GameObject resourcePrefab_;
+    [System.NonSerialized] public Transform outcomeContent_;
+    [System.NonSerialized] public Transform upkeepContent_;
+    [System.NonSerialized] public Transform outputContent_;
 
     private void Awake()
     {
-        outcomeContent = transform.Find("Outcome/Scroll View/Viewport/Content");
-        upkeepContent = transform.Find("Upkeep/Scroll View/Viewport/Content");
-        outputContent = transform.Find("Output/Scroll View/Viewport/Content");
+        outcomeContent_ = transform.Find("Outcome/Scroll View/Viewport/Content");
+        upkeepContent_ = transform.Find("Upkeep/Scroll View/Viewport/Content");
+        outputContent_ = transform.Find("Output/Scroll View/Viewport/Content");
     }
 
     public void AddOutcomeResource(KeyValuePair<Data.Resource, int> resource)
     {
-        GameObject NewResourcePrefab = Instantiate(ResourcePrefab, outcomeContent.position, outcomeContent.rotation, outcomeContent);
-        // Debug.Log(Data.Resource_to_string(resource.Key));
+        GameObject NewResourcePrefab = Instantiate(resourcePrefab_, outcomeContent_.position, outcomeContent_.rotation, outcomeContent_);
+        
         // NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Resource_to_string(resource.Key));
         NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + resource.Key.ToString());
         // NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = "+" + resource.Value.ToString() + " \t" + Data.Resource_to_string(resource.Key).Replace('_', ' ');
@@ -30,8 +30,8 @@ public class OutputManager : MonoBehaviour
 
     public void AddUpkeepResource(KeyValuePair<Data.Resource, int> resource)
     {
-        GameObject NewResourcePrefab = Instantiate(ResourcePrefab, upkeepContent.position, upkeepContent.rotation, upkeepContent);
-        // Debug.Log(Data.Resource_to_string(resource.Key));
+        GameObject NewResourcePrefab = Instantiate(resourcePrefab_, upkeepContent_.position, upkeepContent_.rotation, upkeepContent_);
+        
         // NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Resource_to_string(resource.Key));
         NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + resource.Key.ToString());
         // NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = resource.Value.ToString() + " \t" + Data.Resource_to_string(resource.Key).Replace('_', ' ');
@@ -41,8 +41,8 @@ public class OutputManager : MonoBehaviour
 
     public void AddOutputResource(KeyValuePair<Data.Resource, int> resource)
     {
-        GameObject NewResourcePrefab = Instantiate(ResourcePrefab, outputContent.position, outputContent.rotation, outputContent);
-        // Debug.Log(Data.Resource_to_string(resource.Key));
+        GameObject NewResourcePrefab = Instantiate(resourcePrefab_, outputContent_.position, outputContent_.rotation, outputContent_);
+        
         // NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Resource_to_string(resource.Key));
         NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + resource.Key.ToString());
 
@@ -62,16 +62,16 @@ public class OutputManager : MonoBehaviour
 
     public void ResetResources()
     {
-        if( outcomeContent.childCount > 0)
-            foreach (Transform child in outcomeContent)
+        if( outcomeContent_.childCount > 0)
+            foreach (Transform child in outcomeContent_)
                 GameObject.Destroy(child.gameObject);
 
-        if( upkeepContent.childCount > 0)
-            foreach (Transform child in upkeepContent)
+        if( upkeepContent_.childCount > 0)
+            foreach (Transform child in upkeepContent_)
                 GameObject.Destroy(child.gameObject);
 
-        if( outputContent.childCount > 0)
-            foreach (Transform child in outputContent)
+        if( outputContent_.childCount > 0)
+            foreach (Transform child in outputContent_)
                 GameObject.Destroy(child.gameObject);
     }
 }

@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 public class Data
 {
-    static public string _version_ = "3.2.1";
+    static public string _version_ = "3.3";
     static public bool _isCustomVersion_ = false;
     static public string _customPath_ = "";
 
@@ -96,7 +96,7 @@ public class Data
         Culture_Workers_Output, Spiritualist_Ethics_attraction, Managers_Output, Evaluators_Output, Metallurgist_Output, Trade_Value,
         Automatic_resettlement_chance, Monthly_Organic_Pop_Assembly, Envoy, Habitability, Planet_becomes_Gaia_World, FTL_Inhibitor,
         Spiritualist_Ethics_Attraction, Unity_from_Jobs, Biological_Pop_Happiness, Lithoid_Pop_Happiness,
-        Planet_Capacity_per_Unblocked_District_Slot, Housing_from_Hive_Districts, Pop_Housing_Usage, Colony_Development_Speed
+        Planet_Capacity_per_Unblocked_District_Slot, Housing_from_Hive_Districts, Pop_Housing_Usage, Colony_Development_Speed, Administrator_Output
     };
 
     public static Effects String_to_Effects(string e)
@@ -190,6 +190,7 @@ public class Data
             case "Housing_from_Hive_Districts": return Effects.Housing_from_Hive_Districts;
             case "Pop_Housing_Usage": return Effects.Pop_Housing_Usage;
             case "Colony_Development_Speed": return Effects.Colony_Development_Speed;
+            case "Administrator_Output": return Effects.Administrator_Output;
 
             default: { Debug.Log("INVALID EFFECT: " + e); return Effects.INVALID; }
         }

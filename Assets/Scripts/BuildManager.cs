@@ -5,18 +5,16 @@ using UnityEngine.UI;
 
 public class BuildManager : MonoBehaviour
 {
-    public GameObject BuildingButtonPrefab;
-    public GameObject ResourcePrefab;
-    public GameObject IconResourcePrefab;
-    private PlanetData planetData;
-    private Dictionary<string, GameObject> BuildingButtons;
-    private Transform Content;
+    public GameObject buildingButtonPrefab_;
+    public GameObject resourcePrefab_;
+    public GameObject iconResourcePrefab_;
+    private PlanetData planetData_;
+    private Transform content_;
 
-    // Start is called before the first frame update
     void Start()
     {
-        planetData = transform.parent.parent.GetComponent<PlanetData>();
-        Content = transform.Find("Scroll View/Viewport/Content");
+        planetData_ = transform.parent.parent.GetComponent<PlanetData>();
+        content_ = transform.Find("Scroll View/Viewport/Content");
 
         UpdateBuildingButtons();
     }
@@ -24,8 +22,8 @@ public class BuildManager : MonoBehaviour
     public void UpdateBuildingButtons()
     {
         // Remove all BuildingButtonPrefab instantiated before
-        if (Content.childCount > 0)
-            foreach (Transform child in Content)
+        if (content_.childCount > 0)
+            foreach (Transform child in content_)
                 GameObject.Destroy(child.gameObject);
 
         foreach (KeyValuePair<string, Building> pair in Building._buildings_)
@@ -43,16 +41,16 @@ public class BuildManager : MonoBehaviour
                     negativeRequirement = requirement.Substring(0, 1) + '+' + requirement.Substring(2, requirement.Length - 2);
 
                 // If negativeRequirement belongs to planetData.requirements_, this building is incompatible with actual requirements
-                isCompatible = !planetData.requirements_.Contains(negativeRequirement);
+                isCompatible = !planetData_.requirements_.Contains(negativeRequirement);
             }
 
             if (isCompatible && pair.Value.buildable_ == "Yes")
             {
                 // Instantiate new building button
-                GameObject NewBuildingButtonPrefab = Instantiate(BuildingButtonPrefab, Content.position, Content.rotation, Content);
+                GameObject NewBuildingButtonPrefab = Instantiate(buildingButtonPrefab_, content_.position, content_.rotation, content_);
                 NewBuildingButtonPrefab.transform.Find("Name").GetComponent<Text>().text = pair.Key.Replace('_', ' ');
                 NewBuildingButtonPrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Buildings/" + pair.Key);
-                NewBuildingButtonPrefab.transform.GetComponent<BuildingButtonManager>().building = pair.Value;
+                NewBuildingButtonPrefab.transform.GetComponent<BuildingButtonManager>().building_ = pair.Value;
 
                 // Change button color for unique buildings
                 if (pair.Value.unique_ == "Yes")
@@ -67,14 +65,14 @@ public class BuildManager : MonoBehaviour
 
                 foreach (KeyValuePair<Job, int> job in pair.Value.jobs_)
                 {
-                    GameObject NewResourcePrefab = Instantiate(ResourcePrefab, ButtonContent.position, ButtonContent.rotation, ButtonContent);
+                    GameObject NewResourcePrefab = Instantiate(resourcePrefab_, ButtonContent.position, ButtonContent.rotation, ButtonContent);
                     NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Jobs/" + job.Key.name_);
                     NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = job.Value + " " + job.Key.name_.Replace('_', ' ');
                 }
 
                 foreach (KeyValuePair<Data.Effects, int> effect in pair.Value.effects_)
                 {
-                    GameObject NewResourcePrefab = Instantiate(ResourcePrefab, ButtonContent.position, ButtonContent.rotation, ButtonContent);
+                    GameObject NewResourcePrefab = Instantiate(resourcePrefab_, ButtonContent.position, ButtonContent.rotation, ButtonContent);
                     NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Effects/" + effect.Key.ToString());
                     NewResourcePrefab.transform.Find("Name").GetComponent<Text>().text = effect.Value + "% " + effect.Key.ToString().Replace('_', ' ');
                 }
@@ -84,7 +82,7 @@ public class BuildManager : MonoBehaviour
                 foreach (KeyValuePair<Data.Resource, int> pairUpkeep in pair.Value.upkeep_)
                     if (pairUpkeep.Value < 0)
                     {
-                        GameObject NewIconResourcePrefab = Instantiate(IconResourcePrefab, UpkeepContent.position, UpkeepContent.rotation, UpkeepContent);
+                        GameObject NewIconResourcePrefab = Instantiate(iconResourcePrefab_, UpkeepContent.position, UpkeepContent.rotation, UpkeepContent);
                         NewIconResourcePrefab.transform.Find("UpkeepCounter").GetComponent<Text>().text = (-1 * pairUpkeep.Value).ToString();
                         NewIconResourcePrefab.transform.Find("UpkeepIcon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + pairUpkeep.Key.ToString());
                         NewIconResourcePrefab.transform.Find("UpkeepIcon").GetComponent<Image>().color = new Color32(255, 255, 255, 255);
@@ -95,9 +93,9 @@ public class BuildManager : MonoBehaviour
 
     public void UpdateBuildingButtonsByRequirements()
     {
-        foreach (Transform buildButton in Content)
+        foreach (Transform buildButton in content_)
         {
-            if (buildButton.parent == Content)
+            if (buildButton.parent == content_)
             {
                 bool isCompatible = true;
                 string negativeRequirement = "";
@@ -114,7 +112,7 @@ public class BuildManager : MonoBehaviour
                         negativeRequirement = requirement.Substring(0, 1) + '+' + requirement.Substring(2, requirement.Length - 2);
 
                     // If negativeRequirement belongs to planetData.requirements_, this building is incompatible with actual requirements
-                    isCompatible = !planetData.requirements_.Contains(negativeRequirement);
+                    isCompatible = !planetData_.requirements_.Contains(negativeRequirement);
                 }
 
                 if (!isCompatible || building.buildable_ != "Yes")

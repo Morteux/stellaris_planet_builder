@@ -10,7 +10,6 @@ public class PlanetTypeButtonManager : MonoBehaviour
     private Transform planetTypeContent_;
     private PlanetData planetData_;
 
-    // Start is called before the first frame update
     void Start()
     {
         planetTypePanel_ = transform.parent.parent.parent.parent.Find("ButtonPanels/PlanetTypePanel").gameObject;

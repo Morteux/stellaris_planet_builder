@@ -18,7 +18,6 @@ public class AddVersionButtonManager : MonoBehaviour
     private InputField governmentsInputField_;
     private string defaultWarningText_;
 
-    // Start is called before the first frame update
     void Start()
     {
         gridLayout_ = transform.parent.Find("GridLayout");
@@ -126,6 +125,9 @@ public class AddVersionButtonManager : MonoBehaviour
 
             // Store new line version in custom versions dataset
             File.AppendAllText(Application.persistentDataPath + "/Custom/NewVersions.txt", line);
+            
+            // Set accept button interactable to force select a new version
+            transform.parent.Find("Accept").GetComponent<Button>().interactable = false;
         }
         else
         {

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CostButtonManager : MonoBehaviour
 {
-    public GameObject ResourcePrefab;
+    public GameObject resourcePrefab_;
     private PlanetData planetData_;
     private GameObject costPanel_;
     private Transform costPanelContent_;
@@ -17,7 +17,6 @@ public class CostButtonManager : MonoBehaviour
         costPanel_.SetActive(false);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         planetData_ = transform.parent.parent.parent.parent.parent.GetComponent<PlanetData>();
@@ -36,7 +35,7 @@ public class CostButtonManager : MonoBehaviour
 
     public void UpdateCosts()
     {
-        costPanel_.transform.Find("Resource/Name").GetComponent<Text>().text = planetData_.timeCount + " days / " + (planetData_.timeCount / 365.0f).ToString("0.00") + " years";
+        costPanel_.transform.Find("Resource/Name").GetComponent<Text>().text = planetData_.timeCount_ + " days / " + (planetData_.timeCount_ / 365.0f).ToString("0.00") + " years";
 
         // Remove all ResourcePrefab instantiated before
         if (costPanelContent_.childCount > 0)
@@ -49,7 +48,7 @@ public class CostButtonManager : MonoBehaviour
 
             if (pair.Value != 0)
             {
-                GameObject NewResourcePrefab = Instantiate(ResourcePrefab, costPanelContent_.position, costPanelContent_.rotation, costPanelContent_);
+                GameObject NewResourcePrefab = Instantiate(resourcePrefab_, costPanelContent_.position, costPanelContent_.rotation, costPanelContent_);
                 // Debug.Log(Data.Resource_to_string(pair.Key));
                 // NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + Data.Resource_to_string(pair.Key));
                 NewResourcePrefab.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Resources/" + pair.Key.ToString());

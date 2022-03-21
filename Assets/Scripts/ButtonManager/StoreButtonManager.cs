@@ -9,7 +9,6 @@ public class StoreButtonManager : MonoBehaviour
     private Transform storePanel_;
     private string defaultFilePath_;
 
-    // Start is called before the first frame update
     void Start()
     {
         storePanel_ = transform.parent.parent.Find("Panels/StorePanel");

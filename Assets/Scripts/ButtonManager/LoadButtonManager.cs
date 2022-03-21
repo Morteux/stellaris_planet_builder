@@ -9,7 +9,6 @@ public class LoadButtonManager : MonoBehaviour
     private Transform loadPanel_;
     private string defaultFilePath_;
 
-    // Start is called before the first frame update
     void Start()
     {
         loadPanel_ = transform.parent.parent.Find("Panels/LoadPanel");

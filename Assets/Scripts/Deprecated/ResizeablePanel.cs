@@ -4,10 +4,8 @@ using UnityEngine.EventSystems;
 
 public class ResizeablePanel : MonoBehaviour, IPointerDownHandler, IDragHandler
 {
-
     public Vector2 minSize;
     public Vector2 maxSize;
-
     private RectTransform rectTransform;
     private Vector2 currentPointerPosition;
     private Vector2 previousPointerPosition;

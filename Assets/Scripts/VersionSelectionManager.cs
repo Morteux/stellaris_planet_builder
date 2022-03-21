@@ -7,23 +7,21 @@ using UnityEngine.SceneManagement;
 
 public class VersionSelectionManager : MonoBehaviour
 {
-    public GameObject VersionButtonPrefab;
-    [System.NonSerialized] public GameObject SelectedVersion;
-    private string version;
+    public GameObject versionButtonPrefab_;
+    private string version_;
     private string customPath_;
-    private int versionButtonCount;
-    private Transform loadingScreen;
-    private Transform progressBar;
-    private AsyncOperation loadingOperation;
+    private int versionButtonCount_;
+    private Transform loadingScreen_;
+    private Transform progressBar_;
+    private AsyncOperation loadingOperation_;
 
-    // Start is called before the first frame update
     void Start()
     {
-        version = "";
-        versionButtonCount = 0;
-        loadingScreen = transform.parent.parent.Find("LoadingScreen");
-        progressBar = loadingScreen.Find("Slider");
-        loadingScreen.gameObject.SetActive(false);
+        version_ = "";
+        versionButtonCount_ = 0;
+        loadingScreen_ = transform.parent.parent.Find("LoadingScreen");
+        progressBar_ = loadingScreen_.Find("Slider");
+        loadingScreen_.gameObject.SetActive(false);
 
         transform.parent.Find("Accept").GetComponent<Button>().onClick.AddListener(AcceptButton);
 
@@ -35,13 +33,13 @@ public class VersionSelectionManager : MonoBehaviour
             string[] lineArray = Regex.Split(line, ",\\s*");
 
             // Last version available is selected by default
-            if (version == "" && lineArray[1] == "Yes")
+            if (version_ == "" && lineArray[1] == "Yes")
             {
-                version = lineArray[0];
-                transform.parent.Find("Accept").GetChild(0).GetComponent<Text>().text = "Load: " + version;
+                version_ = lineArray[0];
+                transform.parent.Find("Accept").GetChild(0).GetComponent<Text>().text = "Load: " + version_;
             }
 
-            GameObject NewVersionButtonPrefab = Instantiate(VersionButtonPrefab, transform.position, transform.rotation, transform);
+            GameObject NewVersionButtonPrefab = Instantiate(versionButtonPrefab_, transform.position, transform.rotation, transform);
 
             NewVersionButtonPrefab.GetComponent<Button>().onClick.AddListener(SelectVersion);
             NewVersionButtonPrefab.transform.Find("Version").GetComponent<Text>().text = lineArray[0];
@@ -51,19 +49,19 @@ public class VersionSelectionManager : MonoBehaviour
             if (lineArray[1] == "No")
                 NewVersionButtonPrefab.GetComponent<Button>().interactable = false;
 
-            ++versionButtonCount;
+            ++versionButtonCount_;
         }
 
-        Debug.Log("Versions loaded: " + versionButtonCount);
+        Debug.Log("Versions loaded: " + versionButtonCount_);
     }
 
     private void Update()
     {
-        if (loadingScreen.gameObject.activeSelf)
+        if (loadingScreen_.gameObject.activeSelf)
         {
-            float progressValue = Mathf.Clamp01(loadingOperation.progress / 0.9f);
-            progressBar.GetComponent<Slider>().value = progressValue;
-            progressBar.Find("Value").GetComponent<Text>().text = Mathf.Round(progressValue * 100).ToString("0.0") + "%";
+            float progressValue = Mathf.Clamp01(loadingOperation_.progress / 0.9f);
+            progressBar_.GetComponent<Slider>().value = progressValue;
+            progressBar_.Find("Value").GetComponent<Text>().text = Mathf.Round(progressValue * 100).ToString("0.0") + "%";
         }
     }
 
@@ -76,29 +74,37 @@ public class VersionSelectionManager : MonoBehaviour
     // Store version value in this button
     public void SelectVersion()
     {
-        version = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.Find("Version").GetComponent<Text>().text;
-        transform.parent.Find("Accept").GetChild(0).GetComponent<Text>().text = "Load: " + version;
+        // Debug.Log("SelectVersion");
+
+        Data._isCustomVersion_ = false;
+        version_ = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.Find("Version").GetComponent<Text>().text;
+        transform.parent.Find("Accept").GetChild(0).GetComponent<Text>().text = "Load: " + version_;
+        transform.parent.Find("Accept").GetComponent<Button>().interactable = true;
     }
 
     // Store version value in this button
     public void SelectCustomVersion()
     {
+        // Debug.Log("SelectCustomVersion");
+
         Data._isCustomVersion_ = true;
-        customPath_ = Application.persistentDataPath + "/Custom/" + UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.Find("Version").GetComponent<Text>().text;
-        transform.parent.Find("Accept").GetChild(0).GetComponent<Text>().text = "Load: " + version;
+        version_ = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.Find("Version").GetComponent<Text>().text;
+        customPath_ = Application.persistentDataPath + "/Custom/" + version_;
+        transform.parent.Find("Accept").GetChild(0).GetComponent<Text>().text = "Load: " + version_;
+        transform.parent.Find("Accept").GetComponent<Button>().interactable = true;
     }
 
     void AcceptButton()
     {
-        if (!Data._isCustomVersion_)
-            Data._version_ = version;
-        else
+        Data._version_ = version_;
+
+        if (Data._isCustomVersion_)
             Data._customPath_ = customPath_;
 
-        loadingScreen.gameObject.SetActive(true);
+        loadingScreen_.gameObject.SetActive(true);
 
-        loadingScreen.GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/LoadingScreens/" + Random.Range(0, 17));
+        loadingScreen_.GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/LoadingScreens/" + Random.Range(0, 17));
 
-        loadingOperation = SceneManager.LoadSceneAsync("PlanetView");
+        loadingOperation_ = SceneManager.LoadSceneAsync("PlanetView");
     }
 }

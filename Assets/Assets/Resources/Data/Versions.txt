@@ -1,3 +1,4 @@
+3.3,Yes,https://stellaris.paradoxwikis.com/Patch_3.3,2022-02-23,70fc,Libra. Bugfix/Improvement
 3.2,Yes,https://stellaris.paradoxwikis.com/Patch_3.2,2021-11-22,de97,Herbert. Released alongside the Aquatics Species Pack
 3.1,No,https://stellaris.paradoxwikis.com/Patch_3.1,2021-09-14,22a5,Lem: 18th major patch.
 3.0,No,https://stellaris.paradoxwikis.com/Patch_3.0,2021-04-15,~,Dick: 17th major patch. Released alongside Nemesis.

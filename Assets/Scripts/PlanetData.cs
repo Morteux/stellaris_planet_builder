@@ -19,8 +19,8 @@ public class PlanetData : MonoBehaviour
     [System.NonSerialized] public Dictionary<Data.Effects, int> effects_;
     [System.NonSerialized] public Dictionary<Data.Effects, int> planetTypeEffects_;
     [System.NonSerialized] public int planetSize_;
-    [System.NonSerialized] public int jobCount;
-    [System.NonSerialized] public int timeCount;
+    [System.NonSerialized] public int jobCount_;
+    [System.NonSerialized] public int timeCount_;
     [System.NonSerialized] public string planetType_;
     [System.NonSerialized] public string government_;
     [System.NonSerialized] public HashSet<string> planetTypeRequirement_;
@@ -29,18 +29,12 @@ public class PlanetData : MonoBehaviour
     [System.NonSerialized] public Transform planetName_;
     [System.NonSerialized] public Transform planetNameInputField_;
     [System.NonSerialized] public bool isInitialized_;
-    private OutputManager outputManager;
+    private OutputManager outputManager_;
 
     private void Awake() {
         isInitialized_ = false;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        outputManager = transform.GetComponentInChildren<OutputManager>();
-
-        buildings_ = new Building[transform.Find("Panel/BuildingsPanel").GetComponent<SlotsManager>().Slots.transform.childCount];
+        
+        outputManager_ = transform.GetComponentInChildren<OutputManager>();
 
         districtCounter_ = 0;
         district_ = new Dictionary<string, int>();
@@ -56,14 +50,19 @@ public class PlanetData : MonoBehaviour
         effects_ = new Dictionary<Data.Effects, int>();
         planetTypeEffects_ = new Dictionary<Data.Effects, int>();
 
-        jobCount = 0;
-        timeCount = 0;
+        jobCount_ = 0;
+        timeCount_ = 0;
 
         planetType_ = "Continental";
         government_ = "";
         planetTypeRequirement_ = new HashSet<string>();
         governmentRequirement_ = new HashSet<string>();
         requirements_ = new HashSet<string>();
+    }
+
+    void Start()
+    {
+        buildings_ = new Building[transform.Find("Panel/BuildingsPanel").GetComponent<SlotsManager>().slots_.transform.childCount];
 
         planetName_ = transform.Find("PlanetName");
         planetNameInputField_ = transform.Find("Panel/PlanetNameInputField");
@@ -74,7 +73,7 @@ public class PlanetData : MonoBehaviour
 
     public void UpdatePlanetData()
     {
-        outputManager.ResetResources();
+        outputManager_.ResetResources();
 
         jobs_ = new Dictionary<Job, int>();
         costResources_ = new Dictionary<Data.Resource, int>();
@@ -83,16 +82,14 @@ public class PlanetData : MonoBehaviour
         outputResources_ = new Dictionary<Data.Resource, int>();
         effects_ = new Dictionary<Data.Effects, int>();
 
-        jobCount = 0;
-        timeCount = 0;
+        jobCount_ = 0;
+        timeCount_ = 0;
 
         // Calculate planetary job
         foreach (KeyValuePair<Job, int> job in Planet._planets_[planetType_].jobs_)
         {
             if (job.Value != 0)
             {
-                // jobCount += job.Value; // Count all jobs in the planet
-
                 if (jobs_.ContainsKey(job.Key))
                     jobs_[job.Key] += job.Value;
                 else
@@ -105,8 +102,6 @@ public class PlanetData : MonoBehaviour
         {
             if (job.Value != 0)
             {
-                // jobCount += job.Value; // Count all jobs in the planet
-
                 if (jobs_.ContainsKey(job.Key))
                     jobs_[job.Key] += job.Value;
                 else
@@ -141,7 +136,7 @@ public class PlanetData : MonoBehaviour
                 else
                     costResources_.Add(pair.Key, pair.Value * district.Value);
 
-            timeCount += District._districts_[district.Key].time_ * district.Value;
+            timeCount_ += District._districts_[district.Key].time_ * district.Value;
         }
 
         // Calculate building outcome
@@ -192,7 +187,7 @@ public class PlanetData : MonoBehaviour
                         else
                             costResources_.Add(pair.Key, pair.Value);
 
-                    timeCount += downgraded.time_;
+                    timeCount_ += downgraded.time_;
 
                     isDowngradable = Building._buildings_.TryGetValue(downgraded.downgrade_, out downgraded);
                 }
@@ -202,7 +197,7 @@ public class PlanetData : MonoBehaviour
         // Calculate final outcome
         foreach (KeyValuePair<Job, int> pair in jobs_)
         {
-            jobCount += pair.Value; // Count all jobs in the planet
+            jobCount_ += pair.Value; // Count all jobs in the planet
 
             foreach (KeyValuePair<Data.Resource, int> pair2 in pair.Key.produces_)
                 if (outcomeResources_.ContainsKey(pair2.Key))
@@ -228,9 +223,9 @@ public class PlanetData : MonoBehaviour
 
         // Jobs count == housing for working pop
         if (upkeepResources_.ContainsKey(Data.Resource.Housing))
-            upkeepResources_[Data.Resource.Housing] = -1 * jobCount;
+            upkeepResources_[Data.Resource.Housing] = -1 * jobCount_;
         else
-            upkeepResources_.Add(Data.Resource.Housing, -1 * jobCount);
+            upkeepResources_.Add(Data.Resource.Housing, -1 * jobCount_);
 
         // Calculate final output
         foreach (KeyValuePair<Data.Resource, int> pair in outcomeResources_)
@@ -248,15 +243,15 @@ public class PlanetData : MonoBehaviour
         // Print final resources
         foreach (KeyValuePair<Data.Resource, int> pair in outcomeResources_)
             if (pair.Value != 0)
-                outputManager.AddOutcomeResource(pair);
+                outputManager_.AddOutcomeResource(pair);
 
         foreach (KeyValuePair<Data.Resource, int> pair in upkeepResources_)
             if (pair.Value != 0)
-                outputManager.AddUpkeepResource(pair);
+                outputManager_.AddUpkeepResource(pair);
 
         foreach (KeyValuePair<Data.Resource, int> pair in outputResources_)
             if (pair.Value != 0)
-                outputManager.AddOutputResource(pair);
+                outputManager_.AddOutputResource(pair);
     }
 
     void ChangePlanetName()

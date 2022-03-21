@@ -5,27 +5,27 @@ using UnityEngine.UI;
 
 public class EthicsButtonManager : MonoBehaviour
 {
-    private PlanetData planetData;
-    private Transform EthicsPanel;
+    private PlanetData planetData_;
+    private Transform ethicsPanel_;
 
     private void Awake()
     {
-        EthicsPanel = transform.parent.parent.parent.parent.Find("ButtonPanels/EthicsPanel");
-        EthicsPanel.gameObject.SetActive(false);
+        ethicsPanel_ = transform.parent.parent.parent.parent.Find("ButtonPanels/EthicsPanel");
+        ethicsPanel_.gameObject.SetActive(false);
     }
-    // Start is called before the first frame update
+    
     void Start()
     {
-        planetData = transform.parent.parent.parent.parent.parent.GetComponent<PlanetData>();
+        planetData_ = transform.parent.parent.parent.parent.parent.GetComponent<PlanetData>();
 
         transform.GetComponent<Button>().onClick.AddListener(ShowEthicsPanel);
-        EthicsPanel.Find("Close").GetComponent<Button>().onClick.AddListener(ShowEthicsPanel);
+        ethicsPanel_.Find("Close").GetComponent<Button>().onClick.AddListener(ShowEthicsPanel);
     }
 
     void ShowEthicsPanel()
     {
         // Debug.Log("ShowEthicssPanel");
         
-        EthicsPanel.gameObject.SetActive(!EthicsPanel.gameObject.activeSelf);
+        ethicsPanel_.gameObject.SetActive(!ethicsPanel_.gameObject.activeSelf);
     }
 }

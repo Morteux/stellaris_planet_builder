@@ -20,7 +20,6 @@ public class CustomizeButtonManager : MonoBehaviour
     private bool isPercentageCallback_;
     private bool isJobsCallback_;
 
-    // Start is called before the first frame update
     void Start()
     {
         // Debug.Log("CustomizeButtonManager::Start");
