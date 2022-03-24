@@ -30,9 +30,10 @@ public class ErrorPanelManager : MonoBehaviour
         {
             warningInputField_.text = logString;
             warningInputField_.text = logString + "\n\n" + stackTrace;
+
+            errorPanel_.SetActive(true);
         }
 
-        errorPanel_.SetActive(true);
     }
 
     void ShowPanel()

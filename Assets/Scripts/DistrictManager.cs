@@ -134,7 +134,7 @@ public class DistrictManager : MonoBehaviour
     // Set district buttons listeners
     void SetDistrictButtonListeners()
     {
-        // Debug.Log("SetDistrictButtonListeners");
+        Debug.Log("SetDistrictButtonListeners");
 
         for (int i = 0; i < districtNum_; ++i)
         {
@@ -163,7 +163,7 @@ public class DistrictManager : MonoBehaviour
     // Mode = -1, decrement
     void ChangeDistrictCounter(Transform district, string districtName, int mode)
     {
-        // Debug.Log("ChangeDistrictCounter");
+        Debug.Log("ChangeDistrictCounter");
 
         int selected = int.Parse(district.Find("SelectedDistrictSlot/Counter").GetComponent<Text>().text);
         int unselected = int.Parse(district.Find("UnselectedDistrictSlot/Counter").GetComponent<Text>().text);
@@ -301,6 +301,9 @@ public class DistrictManager : MonoBehaviour
         }
 
         districtNum_ = districtNames_.Count;
+
+        // Set planet district counter to 0
+        planetData_.districtCounter_ = 0;
 
         // Initialize district slots
         InstantiateNewDistrictSlots();

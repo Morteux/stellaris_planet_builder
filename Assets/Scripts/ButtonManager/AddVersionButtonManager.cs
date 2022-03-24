@@ -150,14 +150,4 @@ public class AddVersionButtonManager : MonoBehaviour
             warningText_.gameObject.SetActive(true);
         }
     }
-
-/*
-pruebabababa
-jdalfgnfa ajofjnjf naohfjdn oahnafj opción adjfhdf h.
-D:\Descargas\Jobs.txt
-D:\Descargas\Districts.txt
-D:\Descargas\Buildings.txt
-D:\Descargas\Planets.txt
-D:\Descargas\Governments.txt
-*/
 }
