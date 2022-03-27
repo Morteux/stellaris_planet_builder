@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="Stellaris, Planet, Builder, Building, Simulator">
+    <meta name="authors" content="Ignacio Meléndez Lapi">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="index.css">
+
+    <title>Stellaris Planet Builder Simulator</title>
+
+    <link rel="icon" href="images/favicon.png">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-title">
+            <h1>Stellaris Planet Builder Simulator</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="panel">
+            <div>
+                <h2 id="Contents">Contents</h2>
+                <ol>
+                    <li><a href="#1">Download</a></li>
+                    <li><a href="#2">Features</a></li>
+                    <li><a href="#3">To do/Planning</a></li>
+                    <li><a href="#4">Tutorials</a>
+                        <ol>
+                            <li><a href="#4.1">Export planet</a></li>
+                            <li><a href="#4.2">Import planet</a></li>
+                            <li><a href="#4.3">Import version</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="#5">Disclaimer</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="panel">
+            <div>
+                <h2 id="1">1. Download</h2>
+                <span><a href="https://github.com/Morteux/stellaris_planet_builder/releases/download/alpha/alpha-0.0.1.zip">spbs_alpha-0.0.1.zip
+                        (41.8 MB)</a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="panel">
+            <div>
+                <h2 id="2">2. Features</h2>
+                <img src="images/planet_view.png">
+                <ul>
+                    <li>Dynamic buildings list.</li>
+                    <li>Requirements check based on buildings, government and planet type selected.</li>
+                    <li>Resource output, upkeep and total outcome autocalculated.</li>
+                    <li>Total time and resource cost required to build the planet.</li>
+                    <li>Job list and housing required.</li>
+                    <li>Customization panel to add own resource output or upkeep, using absolute values or percentage,
+                        and absolute values for jobs too.</li>
+                    <li>Import/export planet templates to save your work and share it.</li>
+                    <li>Load custom versions. You can create/modify/delete buildings, jobs, planets type and its
+                        districts.</li>
+                </ul>
+                <img src="images/select_version.png">
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="panel">
+            <div>
+                <h2 id="3">3. To do/Planning</h2>
+                <ul>
+                    <li>Change buildings jobs and effect based on government type.</li>
+                    <li>Planetary designations.</li>
+                    <li>Civics.</li>
+                    <li>Empire ethics.</li>
+                    <li>Effects.</li>
+                    <li>Pop management.</li>
+                    <li>Traditions.</li>
+                    <li>Relics active and pasive effects.</li>
+                    <li>Planetary decisions (Resort, Penal or Thrall Worlds).</li>
+                    <li>Customize panel for effects.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="panel">
+            <div>
+                <h2 id="4">4. Tutorials</h2>
+                <h3 id="4.1">Export planet:</h3>
+                <div>
+                    Exported planets will be stored in the target folder with .spbs extension, which is a plain text
+                    file you can access through any tipical text editor.
+                    <img src="images/store_planet.png">
+
+                    Result file will be like this output:
+                    <img src="images/planet_file.png">
+                </div>
+                <h3 id="4.2">Import planet:</h3>
+                <div>
+                    <img src="images/load_planet.gif">
+                </div>
+                <h3 id="4.3">Import version:</h3>
+                <div>
+                    By default, you can access files from custom version in
+                    C:/Users/[YOUR_USERNAME]/AppData/LocalLow/Stellaris Planet Builder Simulator/Stellaris Planet
+                    Builder Simulator in Windows. <br><br> For Linux and MAC users, you can find this path in the new
+                    version panel.
+                    <img src="images/import_version1.png">
+
+                    If you open that path, you can see a custom folder, initially empty. When you create a new version,
+                    it will be stored in ./custom/[VERSION_NAME] folder and each file referenced in the new version
+                    panel will be copied there.
+                    <img src="images/import_version2.png">
+
+                    Note: file extension must be .txt <br>
+                    Note: files names must be the same as required in each field. <br>
+                    <br>
+                    Now, bureaucrat jobs produces 100 minerals by free! :)
+
+                    <img src="images/import_version3.png">
+
+                    You can see each input file format expected by app in <a
+                        href="https://drive.google.com/drive/folders/14lG-WEptQ1NUJtR7JfibE6OF-mZN1mpR?usp=sharing"
+                        target="_blank" rel="noopener noreferrer">Drive Sheet Dataset</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="panel">
+            <div>
+                <h2 id="5">5. Disclaimer</h2>
+                <div>This app is made for fans by a fan! I do not own any art/image or any other content related to
+                    Stellaris.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCROLL TO TOP -->
+    <button class="scroll_to_top" onclick="topFunction()" id="topButton" title="Go to top">^</button>
+    <script src="scroll_to_top.js"></script>
+
+</body>
+
+</html>

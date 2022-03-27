@@ -1,7 +1,0 @@
-Democratic	Reassembled_Ship_Shelter	[{+"Democratic"},{-"Authoritarian"},{-"Fanatic_Authoritarian"},{-"Gestalt_Consciousness"},{-"Hive_Mind"},{-"Machine_Intelligence"},{-"Rogue_Servitor"}]
-Oligarchic	Reassembled_Ship_Shelter	[{+"Oligarchic"},{-"Fanatic_Authoritarian"},{-"Fanatic_Egalitarian"},{-"Gestalt_Consciousness"},{-"Hive_Mind"},{-"Machine_Intelligence"},{-"Rogue_Servitor"}]
-Dictatorial	Reassembled_Ship_Shelter	[{+"Dictatorial"},{-"Egalitarian"},{-"Fanatic_Egalitarian"},{-"Gestalt_Consciousness"},{-"Hive_Mind"},{-"Machine_Intelligence"},{-"Rogue_Servitor"}]
-Imperial	Reassembled_Ship_Shelter	[{+"Imperial"},{-"Egalitarian"},{-"Fanatic_Egalitarian"},{-"Gestalt_Consciousness"},{-"Hive_Mind"},{-"Machine_Intelligence"},{-"Rogue_Servitor"}]
-Hive_Mind	Hive_Core	[{+"Gestalt_Consciousness"},{+"Hive_Mind"},{-"Machine_Intelligence"},{-"Democratic"},{-"Oligarchic"},{-"Dictatorial"},{-"Imperial"}{-"Corporate"}{-"Spiritualist"}{-"Rogue_Servitor"}]
-Machine_Intelligence	Deployment_Post	[{+"Gestalt_Consciousness"},{+"Machine_Intelligence"},{-"Hive_Mind"},{-"Democratic"},{-"Oligarchic"},{-"Dictatorial"},{-"Imperial"}{-"Corporate"}{-"Spiritualist"}]
-Corporate	Reassembled_Ship_Shelter	[{+"Corporate"},{-"Fanatic_Authoritarian"},{-"Fanatic_Egalitarian"},{-"Gestalt_Consciousness"},{-"Hive_Mind"},{-"Machine_Intelligence"},{-"Rogue_Servitor"}]
